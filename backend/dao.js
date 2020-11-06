@@ -1,14 +1,7 @@
 import sqlite3 from 'sqlite3'
 import Promise from 'bluebird' 
 
-<<<<<<< HEAD
-const sqlite3 = require('sqlite3')
-const Promise = require('bluebird')
-
-class AppDAO {
-=======
 export class AppDAO {
->>>>>>> Minor fixes
   constructor(dbFilePath) {
     this.db = new sqlite3.Database(dbFilePath, (err) => {
       if (err) {
