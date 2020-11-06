@@ -31,6 +31,10 @@ class TaskRepository {
       [id]
     )
   }
+
+  getAll() {
+    return this.dao.all(`SELECT * FROM tasks`)
+  }
 }
 
 module.exports = TaskRepository;
