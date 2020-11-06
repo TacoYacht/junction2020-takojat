@@ -1,5 +1,5 @@
 
-import AppDAO from './dao.js'
+import { AppDAO } from './dao.js'
 import express from 'express'
 import cors from 'cors'
 
