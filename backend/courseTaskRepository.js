@@ -19,7 +19,7 @@ export class CourseTaskRepository {
   
     create(courseid, taskid) {
       return this.dao.run(
-        'INSERT INTO coursetasks (userId, taskId) VALUES (?, ?)',
+        'INSERT INTO coursetasks (courseId, taskId) VALUES (?, ?)',
         [courseid, taskid])
     }
   
