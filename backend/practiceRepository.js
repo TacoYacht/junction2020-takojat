@@ -29,7 +29,7 @@ export class PracticeRepository {
   }
 
   getByType(type){
-    return this.dao.get(
+    return this.dao.all(
       `SELECT * FROM practices WHERE type = ?`,
     [type])
   }
