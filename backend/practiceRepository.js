@@ -18,6 +18,7 @@ export class PracticeRepository {
           )`
     return this.dao.run(sql)
   }
+
   create(title, imgpath, description, duration, type) {
     return this.dao.run(
       'INSERT INTO practices (title, imgpath, description, duration, type) VALUES (?, ?, ?, ?, ?)',
@@ -28,9 +29,9 @@ export class PracticeRepository {
     return this.dao.all(`SELECT * FROM practices`)
   }
 
-  getByType(type){
-    return this.dao.get(
+  getByType(type) {
+    return this.dao.all(
       `SELECT * FROM practices WHERE type = ?`,
-    [type])
+      [type])
   }
 }
