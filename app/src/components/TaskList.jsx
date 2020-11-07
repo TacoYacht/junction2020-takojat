@@ -66,7 +66,7 @@ function TaskListItem({ task, onClick }) {
       </div>
       <div className="start-task" onClick={onClick}>
         <i data-eva="play" data-eva-fill="#ff0000" data-eva-animation="pulse" />
-        <Timecode time={task.timer} />
+        <Timecode time={task.timer} format="HH:mm:ss" />
       </div>
     </div>
   );

@@ -2,19 +2,22 @@ import React, { useState } from "react";
 import Timer from "react-timer-wrapper";
 import Timecode from "react-timecode";
 
+import { updateTime } from "../utils.js";
 
-export function TaskTimer({ task, timerOn }) {
-  const [progress, setProgress] = useState(0);
+export function TaskTimer({ user, task, timerOn }) {
+  const [time, setTime] = useState(0);
+  const [duration, setDuration] = useState(25 * 60 * 1000);
 
   timerOn = timerOn || false;
 
-  function onTimerUpdate(progress) {
-    setProgress(progress);
+  function onTimerUpdate({time, duration}) {
+    setTime(time);
+    setDuration(duration);
   }
 
   function addTimeForTask() {
     if (!!task) {
-      task.timer = task.timer + progress;
+      updateTime(user, task, duration - time);
     }
   }
 
@@ -23,8 +26,8 @@ export function TaskTimer({ task, timerOn }) {
   }
 
   return (
-    <Timer active={timerOn} duration={2500} onTimeUpdate={onTimerUpdate} onStop={addTimeForTask} onFinish={onFinish}>
-      <Timecode />
+    <Timer active={timerOn} duration={duration} onTimeUpdate={onTimerUpdate} onStop={addTimeForTask} onFinish={onFinish}>
+      <Timecode time={duration - time} format="HH:mm:ss" />
     </Timer>
   );
 }

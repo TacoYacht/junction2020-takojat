@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
 import { TaskTimer } from "./TaskTimer";
 
-export function Task({ task }) {
+export function Task({ task, user }) {
   const [timerOn, setTimerOn] = useState(false);
 
   const buttonText = timerOn ? "Stop" : "Start";
@@ -16,7 +16,7 @@ export function Task({ task }) {
           <div className="container">
             <div className="timer">
               <h2>
-                <TaskTimer task={task} timerOn={timerOn} />
+                <TaskTimer user={user} task={task} timerOn={timerOn} />
               </h2>
               <button className="timer-button" onClick={toggleTimer}>
                 <h2>{buttonText}</h2>

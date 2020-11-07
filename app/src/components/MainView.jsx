@@ -44,8 +44,8 @@ export function MainView({ user }) {
         </div>
       </div>
       {showTaskList && <TaskList user={user} tasks={tasks} setOpenTask={setOpenTask} />}
-      {openTask && <Task task={openTask} />}
-      {showTimer && <Task task={null} />}
+      {openTask && <Task task={openTask} user={user} />}
+      {showTimer && <Task task={null} user={user} />}
     </Fragment>
   );
 }
