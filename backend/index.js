@@ -15,6 +15,7 @@ import bodyParser from 'body-parser'
 import dummyUsersJSON from './dummy/dummyUsers.js'
 import dummyCoursesJSON from './dummy/dummyCourses.js'
 import dummyTasksJSON from './dummy/dummyTasks.js'
+import dummyPracticesJSON from './dummy/dummyPractices.js'
 
 const app = express()
 const port = 8000
@@ -51,6 +52,14 @@ if ((await courseRepo.getAll()).length === 0) {
   console.log('Filling courses table with dummy data')
   dummyCoursesJSON.map(course => {
     courseRepo.create(course.name)
+  })
+}
+
+// Fill practices with dummydata
+if ((await practiceRepo.getAll()).length === 0) {
+  console.log('Filling practices table with dummy data')
+  dummyPracticesJSON.map(practice => {
+      practiceRepo.create(practice.title, practice.imgpath, practice.description, practice.duration)
   })
 }
 

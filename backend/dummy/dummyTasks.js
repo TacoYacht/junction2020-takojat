@@ -10,5 +10,9 @@ export default [
     {
         "name": "task3",
         "description": "Koodaa Mari paremmin"
+    },
+    {
+        "name": "task4",
+        "description": "Nii Mari!"
     }
 ]
