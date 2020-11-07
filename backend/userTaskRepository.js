@@ -13,17 +13,19 @@ export class UserTaskRepository {
         taskId INTEGER,
         timer INTEGER DEFAULT 0,
         completed INTEGER DEFAULT 0,
+        courseId INTEGER DEFAULT NULL,
         FOREIGN KEY (userId) REFERENCES user(id),
         FOREIGN KEY (taskId) REFERENCES task(id),
+        FOREIGN KEY (courseId) REFERENCES courses(id),
         PRIMARY KEY (userId, taskId)
       )`
     return this.dao.run(sql)
   }
 
-  create(userId, taskId) {
+  create(userId, taskId, courseId=null) {
     return this.dao.run(
-      'INSERT INTO userTasks (userId, taskId) VALUES (?, ?)',
-      [userId, taskId])
+      'INSERT INTO userTasks (userId, taskId, courseId) VALUES (?, ?, ?)',
+      [userId, taskId, courseId])
   }
 
   getAllTasksByUserId(userId) {

@@ -87,7 +87,7 @@ if ((await courseTaskRepo.getAll()).length === 0) {
     for (const taskId of course.tasks) {
       courseTaskRepo.create(courseId, taskId)
       for (const userId of course.students) {
-        userTaskRepo.create(userId, taskId)
+        userTaskRepo.create(userId, taskId, courseId)
       }
     }
   }))
