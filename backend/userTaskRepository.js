@@ -47,6 +47,12 @@ export class UserTaskRepository {
     return this.dao.all(`SELECT * FROM userTasks`)
   }
 
+  complete(userid, taskId) {
+    return this.dao.run(
+      'UPDATE userTasks SET completed = 1 WHERE userId = ? AND taskId = ?'
+    )
+  }
+
   increaseTimer(userId, taskId, time) {
     return this.dao.run(
       `UPDATE userTasks SET timer = ? WHERE userId = ? AND taskId = ?`,
