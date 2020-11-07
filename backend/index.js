@@ -99,6 +99,12 @@ app.post('/tasks', (req, res) => {
   res.send('Will add the tasks later')
 })
 
+app.post('/updateTime', async (req, res) => {
+  const { userId, taskId, timeToAdd } = req.query
+  await userTaskRepo.increaseTimer(userId, taskId, timeToAdd)
+  res.status(200).send('Time added to the specified task.')
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`)
 })
