@@ -12,6 +12,7 @@ import cors from 'cors'
 // dummy data sources
 import usersToPushToDbJSON from './dummy/dummyUsers.js'
 import coursesToPushToDbJSON from './dummy/dummyCourses.js'
+import dummyTasksJSON from './dummy/dummyTasks.js'
 
 const app = express()
 const port = 8000
@@ -37,9 +38,9 @@ await userTaskRepo.createTable() // Needs User and tasks
 // Fill usertable with dummydata
 if ((await userRepo.getAll()).length === 0) {
   console.log('Filling users table with dummy data')
-  usersToPushToDbJSON.map(user => {
+  await Promise.all(dummyUsersJSON.map(async user => {
     userRepo.create(user.name, user.isCourse)
-  })
+  }))
 }
 
 // Fill coursetable with dummydata
@@ -50,21 +51,38 @@ if ((await courseRepo.getAll()).length === 0) {
   })
 }
 
+if ((await taskRepo.getAll()).length === 0) {
+  console.log('Filling tasks table with dummy data')
+  await Promise.all(dummyTasksJSON.map(async task => {
+    taskRepo.create(task.name, task.description)
+  }))
+}
+
+if ((await userTaskRepo.getAll()).length === 0) {
+  console.log('Filling userTasks table with dummy data')
+  await Promise.all(dummyUsersJSON.map(async (user) => {
+    const userId = (await userRepo.getByName(user.name)).id
+    for (const taskId of user.tasks) {
+      userTaskRepo.create(userId, taskId)
+    }
+  }))
+}
+
 app.use(cors())
 
 app.get('/', (req, res) => {
   res.send({ 'Hello World!': "Hello" })
 })
 
-app.get('/getTasks', (req, res) => {
+app.get('/getTasks', async (req, res) => {
   const userId = req.query.userId
   if (userId === undefined) {
     res.status(400).send('User id should be given')
   } else if (isNaN(userId)) {
     res.status(400).send('User id should be number')
   } else {
-    const usersTasks = getTasksForUser(userId, dao)
-    res.send(usersTasks)
+      const usersTasks = await getTasksForUser(userId, userTaskRepo, taskRepo)
+      res.send(usersTasks)
   }
 })
 

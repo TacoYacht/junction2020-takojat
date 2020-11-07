@@ -1,11 +1,14 @@
 export default [
     {
-        "name": "Mikki Hiiri"
+        "name": "Mikki Hiiri",
+        "tasks": [1]
     },
     {
-        "name": "Aku Ankka"
+        "name": "Mari Hirvi",
+        "tasks": [2, 3]
     },
     {
-        "name": "Hessu Hopo"
+        "name": "Hessu Hopo",
+        "tasks": []
     }
 ]

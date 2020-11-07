@@ -1,8 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import * as _ from "underscore";
 import classNames from "classnames";
-import { TaskTimer } from "./TaskTimer";
-import AaltoLogo from "./assets/A_.png";
+import AaltoLogo from "../assets/A_.png";
 
 import { Task } from "./Task";
 
@@ -63,13 +62,7 @@ function AddNewTask({ user }) {
 }
 
 function TaskListItem({ task, onClick }) {
-  const [timerOn, setTimerOn] = useState(false);
   const taskCompleted = task.completed === "true";
-
-  function toggleTimer() {
-    setTimerOn(!timerOn);
-  }
-  
   const course = task.owner ? task.owner.name : "Course name";
 
   return(
@@ -85,13 +78,39 @@ function TaskListItem({ task, onClick }) {
   );
 }
 
-export function TaskList({ user }) {
+function TaskList({ tasks }) {
   const [showAddNew, setShowAddNew] = useState(false);
+
+  return(
+    <Fragment>
+      <div className="welcome-view">
+        <div className="container">
+          <h3>{"Hello, " + user.name + "!"}</h3>
+          <h2>{"Here are your most important tasks for today"}</h2>
+          <div className="task-list">
+            {_.map(tasks, (task, i) => {
+              return (
+                <TaskListItem task={task} onClick={() => setOpenTask(task)} key={i} />
+              );
+            })}
+          </div>
+        </div>
+      </div>
+      <div className="add-task">
+        <button onClick={() => setShowAddNew(!showAddNew)}>{"Add new"}</button>
+        {showAddNew && <AddNewTask user={user} />}
+      </div>
+    </Fragment>
+  );
+}
+
+export function MainView({ user }) {
   const [openTask, setOpenTask] = useState(null);
   const [view, setView] = useState("tasks");
   const [tasks, setTasks] = useState([]);
 
   const showTaskList = view === "tasks" && !openTask;
+  const showTimer = view === "timer";
 
   useEffect(() => {
     if (!("Notification" in window)) {
@@ -132,30 +151,9 @@ export function TaskList({ user }) {
           <span onClick={() => setView("break")}>{"Take a break"}</span>
         </div>
       </div>
-      {showTaskList && (
-        <Fragment>
-          <div className="welcome-view">
-            <div className="container">
-              <h3>{"Hello, " + user.name + "!"}</h3>
-              <h2>{"Here are your most important tasks for today"}</h2>
-              <div className="task-list">
-                {_.map(tasks, (task, i) => {
-                  return (
-                    <TaskListItem task={task} onClick={() => setOpenTask(task)} key={i} />
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-          <div className="add-task">
-            <button onClick={() => setShowAddNew(!showAddNew)}>{"Add new"}</button>
-            {showAddNew && <AddNewTask user={user} />}
-          </div>
-          
-        </Fragment>
-      )}
+      {showTaskList && <TaskList tasks={tasks} />}
       {openTask && <Task task={openTask} />}
-      {view === "timer" && <Task task={null} />}
+      {showTimer && <Task task={null} />}
     </Fragment>
   );
 }
