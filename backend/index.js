@@ -150,3 +150,8 @@ app.get('/getPracticeByType', async (req, res) => {
   const practices = await practiceRepo.getByType(practiceType)
   res.send(practices)
 })
+
+app.get('/getCourse', async (req, res) => {
+  const course = await courseRepo.getById(req.query.courseId)
+  res.send(course)
+})

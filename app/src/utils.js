@@ -17,15 +17,20 @@ export async function getUsers() {
 }
 
 export async function getMindfullnessPractices() {
-  let url = new URL("http://localhost:8000/getPractices");
+  let url = new URL("http://localhost:8000/getPracticeByType");
+  let params = { practiceType: "mindfullness" };
+  url.search = new URLSearchParams(params).toString();
+
   let response = await fetch(url);
   let data = await response.json();
-
   return data;
 }
 
 export async function getActivityBreaks() {
-  let url = new URL("http://localhost:8000/getPractices");
+  let url = new URL("http://localhost:8000/getPracticeByType");
+  let params = { practiceType: "activity" };
+  url.search = new URLSearchParams(params).toString();
+
   let response = await fetch(url);
   let data = await response.json();
 

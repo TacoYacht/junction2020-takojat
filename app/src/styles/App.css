@@ -1,10 +1,12 @@
 @import "./fonts.css";
 @import "./TaskList.css";
 @import "./Task.css";
+@import "./TakeABreak.css";
 
 :root {
   --text-secondary: rgba(0, 0, 0, 0.65);
-  --sunset-gradient: linear-gradient(180deg, #FFCEA9 0%, #FFAC98 100%);
+  --sunday-morning-gradient: linear-gradient(349.16deg, rgba(82, 167, 193, 0) 4.4%, rgba(179, 246, 216, 0.74) 94.98%), #52A7C1;
+  --light-blue-gradient: linear-gradient(349.16deg, rgba(194, 231, 242, 0) 4.4%, rgba(252, 254, 255, 0.74) 94.98%), #F5FCFF;
 }
 
 html {
@@ -105,9 +107,5 @@ article {
 }
 
 .task-view .container {
-  width: 80%;
-}
-
-.take-a-break .container {
   width: 80%;
 }
