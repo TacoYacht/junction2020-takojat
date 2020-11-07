@@ -12,7 +12,7 @@ export class TaskRepository {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT,
       description TEXT,
-      FOREIGN KEY (id) REFERENCES users(userid))` // add later when there is this table
+      FOREIGN KEY (id) REFERENCES users(userId))` // add later when there is this table
     return this.dao.run(sql)
   }
 
