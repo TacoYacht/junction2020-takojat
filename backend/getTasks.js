@@ -1,5 +1,12 @@
 export async function getTasksForUser (userId, userTaskRepo, taskRepo) {
-  const usersTaskIds = (await userTaskRepo.getByUserId(userId)).map(row => row.taskId)
-  const tasks = await Promise.all(usersTaskIds.map(async taskId => taskRepo.getById(taskId)))
-  return tasks
+  const userTasks = await userTaskRepo.getAllTasksByUserId(userId)
+  const tasksWithTimerAndCompleted = await Promise.all(userTasks.map(async userTask => {
+    const task = await taskRepo.getById(userTask.taskId)
+    return {
+      name: task.name,
+      description: task.description,
+      ...userTask
+    }
+  }))
+  return tasksWithTimerAndCompleted
 }
