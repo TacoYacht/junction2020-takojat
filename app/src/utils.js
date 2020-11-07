@@ -25,7 +25,7 @@ export async function markCompleted(user, task) {
   urlEncodedDataPairs.push( encodeURIComponent( "taskId" ) + '=' + encodeURIComponent( task.id ) );
   let urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
 
-  XHR.open( 'POST', 'http://localhost:8000/complete' );
+  XHR.open( 'POST', 'http://localhost:8000/completeTask' );
   XHR.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
   XHR.send( urlEncodedData );
 }

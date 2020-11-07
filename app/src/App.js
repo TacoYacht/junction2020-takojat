@@ -1,30 +1,40 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import * as _ from "underscore";
+
 import './styles/App.css';
+import { getUsers } from "./utils.js";
 import { MainView } from './components/MainView';
 
 function App() {
+  const [users, setUsers] = useState();
   const [user, setUser] = useState();
-  const [username, setUsername] = useState("");
+  // const [username, setUsername] = useState("");
 
-  function handleInput(e) {
-    setUsername(e.target.value);
+  // function handleInput(e) {
+  //   setUsername(e.target.value);
+  // }
+
+  useEffect(() => {
+    getUsers().then(data => setUsers(data));
+  }, [])
+
+  function openApp(user) {
+    setUser(user);
   }
 
-  function submitForm() {
-    setUser({ name: username, id: 2 });
-  }
+  console.log(getUsers())
 
   function renderContent() {
     if (user) {
       return <MainView user={user} />
     } else {
       return (
-        <div className="enter-user">
-          <form onSubmit={submitForm}>
-            <label htmlFor="username">{"Username:"}</label>
-            <input name="username" type="text" onChange={handleInput} />
-            <button type="submit">{"Enter"}</button>
-          </form>
+        <div className="user-list">
+          {_.map(users, (user, i) => {
+            return(
+              <button key={i} onClick={() => openApp(user)}>{user.name}</button>
+            );
+          })}
         </div>
       );
     }
