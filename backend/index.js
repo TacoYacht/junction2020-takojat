@@ -134,7 +134,7 @@ app.post('/addTask', (req, res) => {
   // Create userTask relation with the given data
   const ret_val2 = userTaskRepo.create(userId, taskId, courseId)
 
-  res.send('Task created.')
+  res.status(200).send('Task created.')
 })
 
 app.post('/updateTime', async (req, res) => {
