@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './styles/App.css';
-import { TaskList } from './TaskList';
+import { MainView } from './components/MainView';
 
 function App() {
   const [user, setUser] = useState();
@@ -16,7 +16,7 @@ function App() {
 
   function renderContent() {
     if (user) {
-      return <TaskList user={user} />
+      return <MainView user={user} />
     } else {
       return (
         <div className="enter-user">
