@@ -19,8 +19,8 @@ export class TaskRepository {
     CREATE TABLE IF NOT EXISTS tasks (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT,
-      description TEXT)`
-      // FOREIGN KEY (owner) REFERENCES users(userID))` // add later when there is this table
+      description TEXT,
+      FOREIGN KEY (id) REFERENCES users(userid))` // add later when there is this table
     return this.dao.run(sql)
   }
 
