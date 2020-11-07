@@ -1,6 +1,6 @@
 import React from "react";
 
-export function Task(task) {
+export function Task({ task }) {
 
   function notify() {
     new Notification("hey there");

@@ -66,9 +66,10 @@ function AddNewTask() {
 }
 
 export function TaskList() {
-  const list = [{ name: "task 1", description: "task description" }, { name: "task 2", description: "task description" }];
+  // const list = [{ name: "task 1", description: "task description" }, { name: "task 2", description: "task description" }];
 
   const [showAddNew, setShowAddNew] = useState(false);
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     if (!("Notification" in window)) {
@@ -76,21 +77,25 @@ export function TaskList() {
     } else {
       Notification.requestPermission();
     }
-  })
 
-  async function getDataFromBackend() {
-    let response = await fetch("http://localhost:8000/");
+    getTasks().then(data => setTasks(data));
+  }, [])
+
+  async function getTasks() {
+    let url = new URL("http://localhost:8000/getTasks");
+    let params = { userId: 123 };
+    url.search = new URLSearchParams(params).toString();
+
+    let response = await fetch(url);
     let data = await response.json();
     return data;
   }
-
-  getDataFromBackend().then(data => console.log(data));
 
   return (
     <Fragment>
       <div className="task-list">
         <h1>{"This is a list of tasks"}</h1>
-        {_.map(list, (task, i) => {
+        {_.map(tasks, (task, i) => {
           return (<Task task={task} key={i} />);
         })}
       </div>
