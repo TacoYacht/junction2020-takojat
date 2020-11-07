@@ -86,6 +86,12 @@ app.get('/getTasks', async (req, res) => {
   }
 })
 
+app.get('/getUsers', async (req, res) => {
+  // const userId = req.query.userId
+  const users = await userRepo.getAll()
+  res.send(users)
+})
+
 app.post('/tasks', (req, res) => {
   res.send('Will add the tasks later')
 })
