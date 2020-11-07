@@ -1,18 +1,23 @@
 import { useState } from 'react';
+import * as _ from "underscore";
+
 import './styles/App.css';
+import { getUsers } from "./utils.js";
 import { MainView } from './components/MainView';
 
 function App() {
   const [user, setUser] = useState();
-  const [username, setUsername] = useState("");
+  // const [username, setUsername] = useState("");
 
-  function handleInput(e) {
-    setUsername(e.target.value);
+  // function handleInput(e) {
+  //   setUsername(e.target.value);
+  // }
+
+  function openApp(user) {
+    setUser(user);
   }
 
-  function submitForm() {
-    setUser({ name: username, id: 2 });
-  }
+  console.log(getUsers())
 
   function renderContent() {
     if (user) {
@@ -20,11 +25,11 @@ function App() {
     } else {
       return (
         <div className="enter-user">
-          <form onSubmit={submitForm}>
-            <label htmlFor="username">{"Username:"}</label>
-            <input name="username" type="text" onChange={handleInput} />
-            <button type="submit">{"Enter"}</button>
-          </form>
+          {_.map(getUsers(), (user, i) => {
+            return(
+              <button key={i} onClick={() => openApp(user)}>{user.name}</button>
+            );
+          })}
         </div>
       );
     }

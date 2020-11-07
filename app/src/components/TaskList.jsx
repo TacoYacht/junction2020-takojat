@@ -53,6 +53,8 @@ function TaskListItem({ task, onClick }) {
     }
   }
 
+  console.log(task.timer);
+
   const checkbox = completed ? <img src={Checked} alt="checked" /> : <img src={Unchecked} alt="unchecked" />;
 
   return(
