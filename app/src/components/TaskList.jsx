@@ -52,7 +52,13 @@ function TaskListItem({ task, onClick }) {
   }
 
   function getCourseForTask() {
-    getCourseByTask(task);
+    if (task.courseId) {
+      let course = getCourseByTask(task.courseId);
+      console.log(course);
+      return course.name;
+    } else {
+      return "Own task";
+    }
   }
 
   const checkbox = completed ? <img src={Checked} alt="checked" /> : <img src={Unchecked} alt="unchecked" />;
@@ -75,6 +81,7 @@ function TaskListItem({ task, onClick }) {
 
 export function TaskList({ user, tasks, setOpenTask }) {
   const [showAddNew, setShowAddNew] = useState(false);
+  const hasTasks = tasks.length > 0;
 
   function renderNoTasks() {
     return (
@@ -102,7 +109,7 @@ export function TaskList({ user, tasks, setOpenTask }) {
       <div className="welcome-view">
         <div className="container">
           <h3>{"Hello, " + user.name + "!"}</h3>
-          {tasks.length > 0 ? renderTasks() : renderNoTasks()}
+          {hasTasks ? renderTasks() : renderNoTasks()}
         </div>
       </div>
       <div className="add-task">
