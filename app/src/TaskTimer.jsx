@@ -13,7 +13,9 @@ export function TaskTimer({ task, timerOn }) {
   }
 
   function addTimeForTask() {
-    task.cumulativeTime = task.cumulativeTime + progress;
+    if (!!task) {
+      task.cumulativeTime = task.cumulativeTime + progress;
+    }
   }
 
   return (

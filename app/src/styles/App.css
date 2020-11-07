@@ -27,7 +27,7 @@ article {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 40px 0 20px;
 }
 
 .aalto-logo {
@@ -68,7 +68,7 @@ article {
   height: 100%;
   width: 100%;
   position: relative;
-  background-color: #F9FAFC;
+  background-color: #FFF6EF;
 }
 
 .welcome-view .container {

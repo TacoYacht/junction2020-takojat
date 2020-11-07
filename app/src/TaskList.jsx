@@ -80,8 +80,7 @@ function TaskListItem({ task, onClick }) {
         <span>{course}</span>
         <span>{task.description}</span>
       </div>
-      <span>{task.cumulativeTime}</span>
-      <TaskTimer task={task} />
+      <div>{task.cumulativeTime}</div>
     </div>
   );
 }
@@ -89,7 +88,10 @@ function TaskListItem({ task, onClick }) {
 export function TaskList({ user }) {
   const [showAddNew, setShowAddNew] = useState(false);
   const [openTask, setOpenTask] = useState(null);
+  const [view, setView] = useState("tasks");
   const [tasks, setTasks] = useState([]);
+
+  const showTaskList = view === "tasks" && !openTask;
 
   useEffect(() => {
     if (!("Notification" in window)) {
@@ -112,6 +114,11 @@ export function TaskList({ user }) {
     setTasks(data);
   }
 
+  function openTaskView() {
+    setView("tasks");
+    setOpenTask(null);
+  }
+
   return (
     <Fragment>
       <div className="header">
@@ -120,12 +127,12 @@ export function TaskList({ user }) {
           <span className="essentials">{"essentials"}</span>
         </div>
         <div className="navigation">
-          <span onClick={() => setOpenTask(null)}>{"Tasks"}</span>
-          <span onClick={() => {}}>{"Timer"}</span>
-          <span onClick={() => {}}>{"Take a break"}</span>
+          <span onClick={openTaskView}>{"Tasks"}</span>
+          <span onClick={() => setView("timer")}>{"Timer"}</span>
+          <span onClick={() => setView("break")}>{"Take a break"}</span>
         </div>
       </div>
-      {!openTask && (
+      {showTaskList && (
         <Fragment>
           <div className="welcome-view">
             <div className="container">
@@ -148,6 +155,7 @@ export function TaskList({ user }) {
         </Fragment>
       )}
       {openTask && <Task task={openTask} />}
+      {view === "timer" && <Task task={null} />}
     </Fragment>
   );
 }

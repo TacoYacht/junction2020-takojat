@@ -22,11 +22,13 @@ export function Task({ task }) {
               <h2>{buttonText}</h2>
             </button>
           </div>
-          <div className="task-info">
-            <span>{task.name}</span>
-            <span>{task.owner}</span>
-            <span>{task.description}</span>
-          </div>
+          {!!task && (
+            <div className="task-info">
+              <span>{task.name}</span>
+              <span>{task.owner}</span>
+              <span>{task.description}</span>
+            </div>
+          )}
         </div>
       </div>  
     </Fragment>
