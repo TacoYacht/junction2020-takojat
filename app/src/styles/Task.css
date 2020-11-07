@@ -36,6 +36,10 @@
   cursor: pointer;
 }
 
+.timer-button:focus {
+  outline: none;
+}
+
 .timer-button h2 {
   font-weight: 500;
   font-size: 36px;
