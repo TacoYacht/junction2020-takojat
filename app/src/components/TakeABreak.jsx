@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect } from "react";
 import * as _ from "underscore";
 
-import { getPractices } from "../utils.js";
+import { getMindfullnessPractices, getActivityBreaks } from "../utils.js";
 
 function Practice({ practice }) {
   function goToPractice() {
@@ -22,21 +22,32 @@ function Practice({ practice }) {
 }
 
 export function TakeABreak({ user }) {
-  const [practices, setPractices] = useState([]);
+  const [mindfullness, setMindfullness] = useState([]);
+  const [breaks, setBreaks] = useState([]);
 
   useEffect(() => {
-    getPractices().then(data => setPractices(data));
+    getMindfullnessPractices().then(data => setMindfullness(data));
+    getActivityBreaks().then(data => setBreaks(data));
   }, []);
 
   return (
     <Fragment>
       <div className="take-a-break">
         <div className="container">
-          {_.map(practices, (practice, i) => {
-            return (
-              <Practice practice={practice} key={i} />
-            );
-          })}
+          <div className="mindfullness">
+            {_.map(mindfullness, (practice, i) => {
+              return (
+                <Practice practice={practice} key={i} />
+              );
+            })}
+          </div>
+          <div className="breaks">
+            {_.map(breaks, (practice, i) => {
+              return (
+                <Practice practice={practice} key={i} />
+              );
+            })}
+          </div>
         </div>
       </div>  
     </Fragment>

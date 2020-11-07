@@ -16,7 +16,15 @@ export async function getUsers() {
   return data;
 }
 
-export async function getPractices() {
+export async function getMindfullnessPractices() {
+  let url = new URL("http://localhost:8000/getPractices");
+  let response = await fetch(url);
+  let data = await response.json();
+
+  return data;
+}
+
+export async function getActivityBreaks() {
   let url = new URL("http://localhost:8000/getPractices");
   let response = await fetch(url);
   let data = await response.json();

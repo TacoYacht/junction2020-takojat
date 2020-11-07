@@ -5,16 +5,6 @@
   background-color: #FFF6EF;
 }
 
-.task-view .container {
-  position: absolute;
-  width: 80%;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  display: flex;
-  flex-direction: column;
-}
-
 .timer {
   align-self: center;
   text-align-last: center;

@@ -4,10 +4,28 @@
 }
 
 .practice-card {
-  height: 439px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px 0px 0px 24px;
+
+  position: static;
   width: 304px;
-  border-radius: 8px;
+  height: 439px;
+  left: 0px;
+  top: 0px;
+
   background: #FFFFFF;
+  /* fr-shadow-s */
+
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
   border-radius: 8px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 0;
+  align-self: center;
+  flex-grow: 0;
+  margin: 21px 0px;
 }
