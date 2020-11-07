@@ -14,5 +14,17 @@ export default [
     {
         "name": "task4",
         "description": "Nii Mari!"
+    },
+    {
+        "name": "task5",
+        "description": "Kurssin Piirianalyysi II, 1. palautus"
+    },
+    {
+        "name": "task6",
+        "description": "Kurssin Piirianalyysi II, 2. palautus"
+    },
+    {
+        "name": "task7",
+        "description": "Kurssin Korruption perusteet, 59. palautus"
     }
 ]

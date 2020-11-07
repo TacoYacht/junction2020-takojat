@@ -42,17 +42,17 @@ await userTaskRepo.createTable() // Needs User and tasks
 // Fill usertable with dummydata
 if ((await userRepo.getAll()).length === 0) {
   console.log('Filling users table with dummy data')
-  await Promise.all(dummyUsersJSON.map(async user => {
-    userRepo.create(user.name, user.isCourse)
-  }))
+  for (const user of dummyUsersJSON) {
+    await userRepo.create(user.name)
+  }
 }
 
 // Fill coursetable with dummydata
 if ((await courseRepo.getAll()).length === 0) {
   console.log('Filling courses table with dummy data')
-  dummyCoursesJSON.map(course => {
-    courseRepo.create(course.name)
-  })
+  for (const course of dummyCoursesJSON) {
+    await courseRepo.create(course.name)
+  }
 }
 
 // Fill practices with dummydata
@@ -65,9 +65,9 @@ if ((await practiceRepo.getAll()).length === 0) {
 
 if ((await taskRepo.getAll()).length === 0) {
   console.log('Filling tasks table with dummy data')
-  await Promise.all(dummyTasksJSON.map(async task => {
-    taskRepo.create(task.name, task.description)
-  }))
+  for (const task of dummyTasksJSON) {
+    await taskRepo.create(task.name, task.description)
+  }
 }
 
 if ((await userTaskRepo.getAll()).length === 0) {
@@ -76,6 +76,19 @@ if ((await userTaskRepo.getAll()).length === 0) {
     const userId = (await userRepo.getByName(user.name)).id
     for (const taskId of user.tasks) {
       userTaskRepo.create(userId, taskId)
+    }
+  }))
+}
+
+if ((await courseTaskRepo.getAll()).length === 0) {
+  console.log('Filling courseTasks table with dummy data')
+  await Promise.all(dummyCoursesJSON.map(async (course) => {
+    const courseId = (await courseRepo.getByName(course.name)).id
+    for (const taskId of course.tasks) {
+      courseTaskRepo.create(courseId, taskId)
+      for (const userId of course.students) {
+        userTaskRepo.create(userId, taskId, courseId)
+      }
     }
   }))
 }
@@ -135,4 +148,9 @@ app.get('/getPractices', async (req, res) => {
 app.get('/getPracticeByType', async (req, res) => {
   const practices = await practiceRepo.getByType(req.body.practiceType)
   res.send(practices)
+})
+
+app.get('/getCourse', async (req, res) => {
+  const course = await courseRepo.getById(req.query.courseId)
+  res.send(course)
 })
