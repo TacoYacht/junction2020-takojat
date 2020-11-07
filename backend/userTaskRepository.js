@@ -10,7 +10,7 @@ export class UserTaskRepository {
     const sql = `
       CREATE TABLE IF NOT EXISTS usertasks (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        timer INTEGER,
+        timer INTEGER DEFAULT 0,
         FOREIGN KEY (id) REFERENCES users(userId),
         FOREIGN KEY (id) REFERENCES tasks(taskId))`
     return this.dao.run(sql)
@@ -24,7 +24,7 @@ export class UserTaskRepository {
 
   getByUserId(userid) {
     return this.dao.get(
-      `SELECT * FROM userTasks WHERE userid = ?`,
+      `SELECT * FROM userTasks WHERE userId = ?`,
       [id])
   }
 
