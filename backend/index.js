@@ -1,11 +1,12 @@
 
 import { AppDAO } from './dao.js'
 import { getTasksForUser } from './getTasks.js'
+import { TaskRepository } from './taskRepository.js'
 import express from 'express'
 import cors from 'cors'
 
-const app = express();
-const port = 8000;
+const app = express()
+const port = 8000
 
 function createDB() {
   console.log('Initializing database...')
@@ -35,3 +36,11 @@ app.get('/getTasks', (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`)
 });
+
+function createDB() {
+  console.log('Initializing database...')
+  const dao = new AppDAO('./database.sqlite3')
+  const taskRepo = new TaskRepository(dao)
+}
+
+createDB()
