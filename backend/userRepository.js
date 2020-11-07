@@ -18,8 +18,7 @@
       const sql = `
       CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
-        isCourse INTEGER)`
+        name TEXT UNIQUE)`
       return this.dao.run(sql)
     }
   

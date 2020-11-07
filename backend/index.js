@@ -6,6 +6,7 @@ import { UserRepository } from './userRepository.js'
 import { UserTaskRepository } from './userTaskRepository.js'
 import express from 'express'
 import cors from 'cors'
+import usersToPushToDbJSON from './dummyUsers.js'
 
 const app = express()
 const port = 8000
@@ -22,9 +23,17 @@ const userRepo = new UserRepository(dao)
 const userTaskRepo = new UserTaskRepository(dao)
 
 // Create initial tables
-userRepo.createTable()
-taskRepo.createTable()
-userTaskRepo.createTable()
+await Promise.all([userRepo.createTable(), taskRepo.createTable()])
+await userTaskRepo.createTable()
+
+// Fill tables with dummydata
+if ((await userRepo.getAll()).length === 0) {
+  console.log('Filling users table with dummy data')
+  usersToPushToDbJSON.map(user => {
+    userRepo.create(user.name, user.isCourse)
+  })
+}
+
 
 app.use(cors())
 

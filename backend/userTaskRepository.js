@@ -11,14 +11,14 @@ export class UserTaskRepository {
       CREATE TABLE IF NOT EXISTS usertasks (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         timer INTEGER,
-        FOREIGN KEY (id) REFERENCES users(userid),
-        FOREIGN KEY (id) REFERENCES tasks(taskid))`
+        FOREIGN KEY (id) REFERENCES users(userId),
+        FOREIGN KEY (id) REFERENCES tasks(taskId))`
     return this.dao.run(sql)
   }
 
   create(userid, taskid) {
     return this.dao.run(
-      'INSERT INTO userTasks (name) VALUES (?)',
+      'INSERT INTO userTasks (userId, taskId) VALUES (?, ?)',
       [userid, taskid])
   }
 
