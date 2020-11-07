@@ -1,30 +1,30 @@
 export default [
     {
-        "name": "task1",
+        "name": "Do homework",
         "description": "This is very important task"
     },
     {
-        "name": "task2",
+        "name": "Code a bot",
         "description": "Koodaa Mari nopeammin"
     },
     {
-        "name": "task3",
+        "name": "Code a calculator",
         "description": "Koodaa Mari paremmin"
     },
     {
-        "name": "task4",
+        "name": "Take a break",
         "description": "Nii Mari!"
     },
     {
-        "name": "task5",
+        "name": "Thevenin menetelmä",
         "description": "Kurssin Piirianalyysi II, 1. palautus"
     },
     {
-        "name": "task6",
+        "name": "Nortonin menetelmä",
         "description": "Kurssin Piirianalyysi II, 2. palautus"
     },
     {
-        "name": "task7",
+        "name": "Mee töihin",
         "description": "Kurssin Korruption perusteet, 59. palautus"
     }
 ]
