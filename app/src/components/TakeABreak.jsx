@@ -11,12 +11,10 @@ function Practice({ practice }) {
   return (
     <div className="practice-card">
       <img src={practice.imgpath} alt={practice.name} />
-      <span>{practice.title}</span>
+      <h4>{practice.title}</h4>
       <span>{practice.description}</span>
-      <span>{practice.duration}</span>
-      <div className="play-practice">
-        <button onClick={goToPractice}>{"Play"}</button>
-      </div>
+      <span className="caption">{practice.duration + " min"}</span>
+      <button className="play-practice-button" onClick={goToPractice}><i data-eve="" />{"Play"}</button>
     </div>
   );
 }
@@ -34,19 +32,25 @@ export function TakeABreak({ user }) {
     <Fragment>
       <div className="take-a-break">
         <div className="container">
-          <div className="mindfullness">
-            {_.map(mindfullness, (practice, i) => {
-              return (
-                <Practice practice={practice} key={i} />
-              );
-            })}
+          <div className="practice-category">
+            <h3>{"Mindfullness"}</h3>
+            <div className="practices">
+              {_.map(mindfullness, (practice, i) => {
+                return (
+                  <Practice practice={practice} key={i} />
+                );
+              })}
+            </div>
           </div>
-          <div className="breaks">
-            {_.map(breaks, (practice, i) => {
-              return (
-                <Practice practice={practice} key={i} />
-              );
-            })}
+          <div className="practice-category">
+            <h3>{"Activity breaks"}</h3>
+            <div className="practices">
+              {_.map(breaks, (practice, i) => {
+                return (
+                  <Practice practice={practice} key={i} />
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>  

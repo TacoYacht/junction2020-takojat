@@ -5,6 +5,8 @@ h4,
 body {
   font-family: Lato;
   font-style: normal;
+  font-size: 16px;
+  line-height: 150%;
   margin: 0;
   color: rgba(0, 0, 0, 0.85);
 }
@@ -25,3 +27,19 @@ h3 {
   text-align: left;
 }
 
+h4 {
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: 0.311111px;
+  }
+
+span.caption {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 1px;
+  text-align: left;
+  color: #76D7D2;
+}
