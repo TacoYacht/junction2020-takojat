@@ -7,10 +7,17 @@ import cors from 'cors'
 const app = express();
 const port = 8000;
 
+function createDB() {
+  console.log('Initializing database...')
+  return new AppDAO('./database.sqlite3')
+}
+
+const db = createDB()
+
 app.use(cors())
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send({'Hello World!': "Hello"})
 });
 
 app.get('/getTasks', (req, res) => {
@@ -20,7 +27,7 @@ app.get('/getTasks', (req, res) => {
   } else if (isNaN(userId)) {
       res.status(400).send('User id should be number')
   } else {
-      const usersTasks = getTasksForUser(userId)
+      const usersTasks = getTasksForUser(userId, db)
       res.send(usersTasks)
   }
 })
@@ -28,10 +35,3 @@ app.get('/getTasks', (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`)
 });
-
-function createDB() {
-  console.log('Initializing database...')
-  const dao = new AppDAO('./database.sqlite3')
-}
-
-createDB()
