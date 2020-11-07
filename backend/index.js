@@ -2,6 +2,8 @@
 import { AppDAO } from './dao.js'
 import { getTasksForUser } from './getTasks.js'
 import { TaskRepository } from './taskRepository.js'
+import { UserRepository } from './userRepository.js'
+import { UserTaskRepository } from './userTaskRepository.js'
 import express from 'express'
 import cors from 'cors'
 
@@ -13,8 +15,16 @@ function createDB() {
   return new AppDAO('./database.sqlite3')
 }
 
+// Database and table instances
 const dao = createDB()
 const taskRepo = new TaskRepository(dao)
+const userRepo = new UserRepository(dao)
+const userTaskRepo = new UserTaskRepository(dao)
+
+// Create initial tables
+userRepo.createTable()
+taskRepo.createTable()
+userTaskRepo.createTable()
 
 app.use(cors())
 

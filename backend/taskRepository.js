@@ -1,12 +1,4 @@
-// task_repository.js
-
-// Some dummy data
-const tasks = [
-  {
-    name: 'Read chapter ',
-    description: ''
-  }
-]
+// taskRepository.js
 
 export class TaskRepository {
   constructor(dao) {
@@ -20,9 +12,8 @@ export class TaskRepository {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT,
       description TEXT,
-      FOREIGN KEY (owner) REFERENCES users(userID))`
+      FOREIGN KEY (id) REFERENCES users(userid))` // add later when there is this table
     return this.dao.run(sql)
-    console.log('..done!')
   }
 
   create(name) {
