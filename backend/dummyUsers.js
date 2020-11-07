@@ -1,22 +1,11 @@
 export default [
     {
-        "name": "Mikki Hiiri",
-        "isCourse": 0
+        "name": "Mikki Hiiri"
     },
     {
-        "name": "Aku Ankka",
-        "isCourse": 0
+        "name": "Aku Ankka"
     },
     {
-        "name": "Hessu Hopo",
-        "isCourse": 0
-    },
-    {
-        "name": "Ankkalinnan perusteet",
-        "isCourse": 1
-    },
-    {
-        "name": "Sinkut ja järkyt",
-        "isCourse": 1
+        "name": "Hessu Hopo"
     }
 ]

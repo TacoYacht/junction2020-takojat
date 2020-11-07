@@ -18,15 +18,14 @@
       const sql = `
       CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT UNIQUE,
-        isCourse INTEGER)`
+        name TEXT UNIQUE)`
       return this.dao.run(sql)
     }
   
-    create(name, isCourse) {
+    create(name) {
       return this.dao.run(
-        'INSERT INTO users (name, isCourse) VALUES (?, ?)',
-        [name, isCourse])
+        'INSERT INTO users (name) VALUES (?)',
+        [name])
     }
   
     getById(id) {
