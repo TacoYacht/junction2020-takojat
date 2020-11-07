@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import Timer from "react-timer-wrapper";
 import Timecode from "react-timecode";
 
-import './styles/timer.css';
-
 
 export function TaskTimer({ task, timerOn }) {
   const [progress, setProgress] = useState(0);

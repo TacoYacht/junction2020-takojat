@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import * as _ from "underscore";
 import classNames from "classnames";
 import { TaskTimer } from "./TaskTimer";
-import { Header } from './Header';
+import AaltoLogo from "./assets/A_.png";
 
 import { Task } from "./Task";
 
@@ -115,9 +115,14 @@ export function TaskList({ user }) {
   return (
     <Fragment>
       <div className="header">
-        <div className="aalto-logo" />
+        <div className="aalto-logo">
+          <img alt="aalto logo" src={AaltoLogo} />
+          <span className="essentials">{"essentials"}</span>
+        </div>
         <div className="navigation">
-          <button onClick={() => setOpenTask(null)}>{"Return to list"}</button>
+          <span onClick={() => setOpenTask(null)}>{"Tasks"}</span>
+          <span onClick={() => {}}>{"Timer"}</span>
+          <span onClick={() => {}}>{"Take a break"}</span>
         </div>
       </div>
       {!openTask && (

@@ -2,6 +2,11 @@
 @import "./TaskList.css";
 @import "./Task.css";
 
+:root {
+  --text-secondary: rgba(0, 0, 0, 0.65);
+  --sunset-gradient: linear-gradient(180deg, #FFCEA9 0%, #FFAC98 100%);
+}
+
 html {
   background: #F9FAFC, 100%;
   height: 100%;
@@ -17,18 +22,46 @@ article {
 
 .header {
   height: 100px;
-  width: 100%;
-  background-color: red;
+  background: var(--sunset-gradient);
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.aalto-logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.aalto-logo .essentials {
+  font-family: Helvetica;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 142%;
+  color: #FFFFFF;
 }
 
 .header .navigation {
-  position: static;
-  width: 45px;
-  height: 22px;
-  left: 0px;
-  top: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 30%;
+}
+
+.header .navigation span {
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: 0.311111px;
+  color: #FFFFFF;
+}
+
+.header .navigation span:hover {
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .welcome-view {
