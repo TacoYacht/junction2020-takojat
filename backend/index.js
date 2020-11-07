@@ -8,6 +8,7 @@ import { CourseRepository } from './courseRepository.js'
 import { CourseTaskRepository } from './courseTaskRepository.js'
 import express from 'express'
 import cors from 'cors'
+import bodyParser from 'body-parser'
 
 // dummy data sources
 import dummyUsersJSON from './dummy/dummyUsers.js'
@@ -69,6 +70,8 @@ if ((await userTaskRepo.getAll()).length === 0) {
 }
 
 app.use(cors())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
   res.send({ 'Hello World!': "Hello" })
@@ -98,4 +101,11 @@ app.post('/tasks', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`)
+})
+
+app.post('/complete', (req, res) => {
+  const userid = req.body.userId
+  const taskid = req.body.taskId
+  userTaskRepo.complete(userid, taskid)
+  res.status(204).send('Task completed')
 })
