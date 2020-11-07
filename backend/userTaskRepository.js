@@ -8,13 +8,13 @@ export class UserTaskRepository {
   createTable() {
     console.log('Creating userTasks table...')
     const sql = `
-      CREATE TABLE IF NOT EXISTS usertasks (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        timer INTEGER DEFAULT 0,
+      CREATE TABLE IF NOT EXISTS userTasks (
         userId INTEGER,
         taskId INTEGER,
-        FOREIGN KEY (userId) REFERENCES users(id),
-        FOREIGN KEY (taskId) REFERENCES tasks(id))`
+        timer INTEGER DEFAULT 0,
+        completed INTEGER DEFAULT 0,
+        PRIMARY KEY (userId, taskId)
+      )`
     return this.dao.run(sql)
   }
 
@@ -24,16 +24,16 @@ export class UserTaskRepository {
       [userId, taskId])
   }
 
-  getByUserId(userId) {
-    return this.dao.all(
-      `SELECT * FROM userTasks WHERE userId = ?`,
-      [userId])
+  getByIds(userId, taskId) {
+    return this.dao.get(
+      `SELECT * FROM userTasks WHERE userId = ? AND taskId = ?`,
+      [userId, taskId])
   }
 
-  delete(id) {
+  delete(userId, taskId) {
     return this.dao.run(
-      `DELETE FROM userTasks WHERE id = ?`,
-      [id]
+      `DELETE FROM userTasks WHERE userId = ? AND taskId = ?`,
+      [userId, taskId]
     )
   }
 
@@ -41,8 +41,11 @@ export class UserTaskRepository {
     return this.dao.all(`SELECT * FROM userTasks`)
   }
 
-  increaseTimer(time)
-  {
-    
+  increaseTimer(userId, taskId, time) {
+    const { userId, taskId, time } = timer
+    return this.dao.run(
+      `UPDATE userTasks SET timer = ? WHERE userId = ? AND taskId = ?`,
+      [userId, taskId, time]
+    )
   }
 }
