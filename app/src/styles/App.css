@@ -10,7 +10,7 @@
 }
 
 html {
-  background: #F9FAFC, 100%;
+  background: var(--light-blue-gradient);
   height: 100%;
   width: 100%;
 }
@@ -26,7 +26,7 @@ article {
   position: absolute;
   height: 30%;
   width: 30%;
-  top: 50%;
+  top: 30%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   display: flex;
@@ -44,9 +44,9 @@ article {
 
 .header {
   height: 170px;
-  background-image: url("../assets/HeaderBackground.svg");
+  background-image: url("../assets/HeaderWaves.svg");
   background-repeat: no-repeat;
-  background-size: auto;
+  background-size: cover;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -94,12 +94,12 @@ article {
   height: 100%;
   width: 100%;
   position: relative;
-  background-color: #FFF6EF;
+  background: var(--light-blue-gradient);
 }
 
 .container {
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   display: flex;
