@@ -11,7 +11,7 @@ function App() {
   }
 
   function submitForm() {
-    setUser({ name: username, id: 123 });
+    setUser({ name: username, id: 2 });
   }
 
   function renderContent() {
