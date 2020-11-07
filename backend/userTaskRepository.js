@@ -61,13 +61,14 @@ export class UserTaskRepository {
       `SELECT timer FROM userTasks WHERE userId = ? AND taskId = ?`,
       [userId, taskId]
     )
-    console.log(userId, taskId, timeToAdd)
-    console.log(oldTime)
-    const newTime = oldTime + timeToAdd
     
-    return this.dao.run(
+    const newTime = Number(oldTime.timer) + Number(timeToAdd)
+
+    console.log("Updated time is: ", newTime)
+    const ret_val = await this.dao.run(
       `UPDATE userTasks SET timer = ? WHERE userId = ? AND taskId = ?`,
-      [userId, taskId, newTime]
+      [newTime, userId, taskId]
     )
+    return ret_val
   }
 }

@@ -16,6 +16,15 @@ export async function getUsers() {
   return data;
 }
 
+export async function getPractices() {
+  let url = new URL("http://localhost:8000/getPractices");
+  let response = await fetch(url);
+  let data = await response.json();
+
+  return data;
+}
+
+
 export async function markCompleted(user, task) {
   const XHR = new XMLHttpRequest();
 

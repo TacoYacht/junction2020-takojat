@@ -3,6 +3,7 @@ import * as _ from "underscore";
 import AaltoLogo from "../assets/A_.svg";
 
 import { getTasks } from "../utils.js";
+import { TakeABreak } from "./TakeABreak";
 
 import { Task } from "./Task";
 import { TaskList } from "./TaskList";
@@ -14,6 +15,7 @@ export function MainView({ user }) {
 
   const showTaskList = view === "tasks" && !openTask;
   const showTimer = view === "timer";
+  const showPractices = view === "break";
 
   useEffect(() => {
     if (!("Notification" in window)) {
@@ -46,6 +48,7 @@ export function MainView({ user }) {
       {showTaskList && <TaskList user={user} tasks={tasks} setOpenTask={setOpenTask} />}
       {openTask && <Task task={openTask} user={user} />}
       {showTimer && <Task task={null} user={user} />}
+      {showPractices && <TakeABreak user={user} />}
     </Fragment>
   );
 }
