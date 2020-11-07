@@ -59,7 +59,7 @@ if ((await courseRepo.getAll()).length === 0) {
 if ((await practiceRepo.getAll()).length === 0) {
   console.log('Filling practices table with dummy data')
   dummyPracticesJSON.map(practice => {
-      practiceRepo.create(practice.title, practice.imgpath, practice.description, practice.duration)
+      practiceRepo.create(practice.title, practice.imgpath, practice.description, practice.duration, practice.type)
   })
 }
 
@@ -146,7 +146,8 @@ app.get('/getPractices', async (req, res) => {
 })
 
 app.get('/getPracticeByType', async (req, res) => {
-  const practices = await practiceRepo.getByType(req.body.practiceType)
+  const practiceType = req.query.practiceType
+  const practices = await practiceRepo.getByType(practiceType)
   res.send(practices)
 })
 
