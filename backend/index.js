@@ -37,10 +37,10 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`)
 });
 
-function createDB() {
+function createAppDB() {
   console.log('Initializing database...')
   const dao = new AppDAO('./database.sqlite3')
   const taskRepo = new TaskRepository(dao)
 }
 
-createDB()
+createAppDB()
