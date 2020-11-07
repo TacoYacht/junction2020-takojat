@@ -4,6 +4,8 @@ import { getTasksForUser } from './getTasks.js'
 import { TaskRepository } from './taskRepository.js'
 import { UserRepository } from './userRepository.js'
 import { UserTaskRepository } from './userTaskRepository.js'
+import { CourseRepository } from './courseRepository.js'
+import { CourseTaskRepository } from './courseTaskRepository.js'
 import express from 'express'
 import cors from 'cors'
 import usersToPushToDbJSON from './dummyUsers.js'
@@ -21,9 +23,12 @@ const dao = createDB()
 const taskRepo = new TaskRepository(dao)
 const userRepo = new UserRepository(dao)
 const userTaskRepo = new UserTaskRepository(dao)
+const courseRepo = new CourseRepository(dao)
+const courseTaskRepo = new CourseTaskRepository(dao)
 
 // Create initial tables
-await Promise.all([userRepo.createTable(), taskRepo.createTable()])
+await Promise.all([userRepo.createTable(), taskRepo.createTable(), courseRepo.createTable()])
+await courseTaskRepo.createTable()
 await userTaskRepo.createTable()
 
 // Fill tables with dummydata
@@ -38,18 +43,18 @@ if ((await userRepo.getAll()).length === 0) {
 app.use(cors())
 
 app.get('/', (req, res) => {
-  res.send({'Hello World!': "Hello"})
+  res.send({ 'Hello World!': "Hello" })
 })
 
 app.get('/getTasks', (req, res) => {
   const userId = req.query.userId
   if (userId === undefined) {
-      res.status(400).send('User id should be given')
+    res.status(400).send('User id should be given')
   } else if (isNaN(userId)) {
-      res.status(400).send('User id should be number')
+    res.status(400).send('User id should be number')
   } else {
-      const usersTasks = getTasksForUser(userId, dao)
-      res.send(usersTasks)
+    const usersTasks = getTasksForUser(userId, dao)
+    res.send(usersTasks)
   }
 })
 
