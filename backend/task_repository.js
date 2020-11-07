@@ -9,7 +9,9 @@ class TaskRepository {
     const sql = `
     CREATE TABLE IF NOT EXISTS tasks (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT)`
+      name TEXT,
+      description TEXT,
+      FOREIGN KEY (owner) REFERENCES users(userID))`
     return this.dao.run(sql)
   }
 
@@ -30,6 +32,10 @@ class TaskRepository {
       `DELETE FROM tasks WHERE id = ?`,
       [id]
     )
+  }
+
+  getAll() {
+    return this.dao.all(`SELECT * FROM tasks`)
   }
 }
 
