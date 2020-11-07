@@ -8,6 +8,8 @@ import './styles/timer.css';
 export function TaskTimer({ task, timerOn }) {
   const [progress, setProgress] = useState(0);
 
+  timerOn = timerOn || false;
+
   function onTimerUpdate(progress) {
     setProgress(progress);
   }

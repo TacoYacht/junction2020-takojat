@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { render } from "react-dom";
 import * as _ from "underscore";
 import classNames from "classnames";
 import { TaskTimer } from "./TaskTimer";
+import { Header } from './Header';
 
 import { Task } from "./Task";
 
@@ -62,19 +62,26 @@ function AddNewTask({ user }) {
   )
 }
 
-function TaskListItem({ task }) {
+function TaskListItem({ task, onClick }) {
   const [timerOn, setTimerOn] = useState(false);
   const taskCompleted = task.completed === "true";
 
   function toggleTimer() {
     setTimerOn(!timerOn);
   }
+  
+  const course = task.owner ? task.owner.name : "Course name";
 
   return(
-    <div className={classNames("task-list-item", { taskCompleted: "completed" })}>
-      <span>{task.name}</span>
+    <div className={classNames("task-list-item", { "completed": taskCompleted })} onClick={onClick}>
+      <div className={classNames("checkbox", { "completed": taskCompleted })} />
+      <div className="task-info">
+        <span>{task.name}</span>
+        <span>{course}</span>
+        <span>{task.description}</span>
+      </div>
       <span>{task.cumulativeTime}</span>
-      <TaskTimer task={task} timerOn={timerOn} />
+      <TaskTimer task={task} />
     </div>
   );
 }
@@ -106,7 +113,13 @@ export function TaskList({ user }) {
   }
 
   return (
-    <article>
+    <Fragment>
+      <div className="header">
+        <div className="aalto-logo" />
+        <div className="navigation">
+          <button onClick={() => setOpenTask(null)}>{"Return to list"}</button>
+        </div>
+      </div>
       {!openTask && (
         <Fragment>
           <div className="welcome-view">
@@ -130,6 +143,6 @@ export function TaskList({ user }) {
         </Fragment>
       )}
       {openTask && <Task task={openTask} />}
-    </article>
+    </Fragment>
   );
 }

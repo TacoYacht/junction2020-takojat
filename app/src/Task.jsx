@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { TaskTimer } from "./TaskTimer";
 
 export function Task({ task }) {
@@ -10,22 +10,25 @@ export function Task({ task }) {
     setTimerOn(!timerOn);
   }
 
-  function notify() {
-    new Notification("hey there");
-  }
-
   return (
-    <div className="task-view">
-      <p>{"Task name: "}{task.name}</p>
-      <p>{"Task description: "}{task.description}</p>
-      <p>{"Time used for task so far: "}{task.cumulativeTime || 0 + " s"}</p>
-      <div className="timer">
-        <h2>
-          <TaskTimer task={task} timerOn={timerOn} />
-        </h2>
-        <button className="timer-button" onClick={toggleTimer}><h2>{buttonText}</h2></button>
-      </div>
-      {/* <button onClick={notify}>{"Test"}</button> */}
-    </div>
+    <Fragment>
+      <div className="task-view">
+          <div className="container">
+          <div className="timer">
+            <h2>
+              <TaskTimer task={task} timerOn={timerOn} />
+            </h2>
+            <button className="timer-button" onClick={toggleTimer}>
+              <h2>{buttonText}</h2>
+            </button>
+          </div>
+          <div className="task-info-box">
+            <p>{"Task name: "}{task.name}</p>
+            <p>{"Task description: "}{task.description}</p>
+            <p>{"Time used for task so far: "}{task.cumulativeTime || 0}{" s"}</p>
+          </div>
+        </div>
+      </div>  
+    </Fragment>
   );
 }
