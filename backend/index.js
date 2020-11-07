@@ -128,6 +128,11 @@ app.post('/completeTask', (req, res) => {
 })
 
 app.get('/getPractices', async (req, res) => {
-  const practices = await practices.getAll()
+  const practices = await practiceRepo.getAll()
+  res.send(practices)
+})
+
+app.get('/getPracticeByType', async (req, res) => {
+  const practices = await practiceRepo.getByType(req.body.practiceType)
   res.send(practices)
 })
