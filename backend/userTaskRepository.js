@@ -24,6 +24,12 @@ export class UserTaskRepository {
       [userId, taskId])
   }
 
+  getAllTasksByUserId(userId) {
+    return this.dao.all(
+      `SELECT * FROM userTasks WHERE userId = ?`,
+      [userId])
+  }
+
   getByIds(userId, taskId) {
     return this.dao.get(
       `SELECT * FROM userTasks WHERE userId = ? AND taskId = ?`,
@@ -42,7 +48,6 @@ export class UserTaskRepository {
   }
 
   increaseTimer(userId, taskId, time) {
-    const { userId, taskId, time } = timer
     return this.dao.run(
       `UPDATE userTasks SET timer = ? WHERE userId = ? AND taskId = ?`,
       [userId, taskId, time]
