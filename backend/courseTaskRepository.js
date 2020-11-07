@@ -9,8 +9,10 @@ export class CourseTaskRepository {
       console.log('Creating coursetasks table...')
       const sql = `
         CREATE TABLE IF NOT EXISTS coursetasks (
-          FOREIGN KEY (id) REFERENCES courses(courseId),
-          FOREIGN KEY (id) REFERENCES tasks(taskId),
+          courseId INTEGER,
+          taskId INTEGER,
+          FOREIGN KEY (courseId) REFERENCES courses(id),
+          FOREIGN KEY (taskId) REFERENCES tasks(id),
           PRIMARY KEY (courseId, taskId))`
       return this.dao.run(sql)
     }

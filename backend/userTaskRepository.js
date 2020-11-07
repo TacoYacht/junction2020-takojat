@@ -9,12 +9,12 @@ export class UserTaskRepository {
     console.log('Creating userTasks table...')
     const sql = `
       CREATE TABLE IF NOT EXISTS usertasks (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        timer INTEGER DEFAULT 0,
         userId INTEGER,
         taskId INTEGER,
-        timer INTEGER DEFAULT 0,
         FOREIGN KEY (userId) REFERENCES users(id),
-        FOREIGN KEY (taskId) REFERENCES tasks(id),
-        PRIMARY KEY (userId, taskId))`
+        FOREIGN KEY (taskId) REFERENCES tasks(id))`
     return this.dao.run(sql)
   }
 
