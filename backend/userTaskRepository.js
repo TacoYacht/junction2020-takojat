@@ -13,6 +13,8 @@ export class UserTaskRepository {
         taskId INTEGER,
         timer INTEGER DEFAULT 0,
         completed INTEGER DEFAULT 0,
+        FOREIGN KEY (userId) REFERENCES user(id),
+        FOREIGN KEY (taskId) REFERENCES task(id),
         PRIMARY KEY (userId, taskId)
       )`
     return this.dao.run(sql)
@@ -53,10 +55,19 @@ export class UserTaskRepository {
     )
   }
 
-  increaseTimer(userId, taskId, time) {
+  async increaseTimer(userId, taskId, timeToAdd) {
+    
+    const oldTime = await this.dao.get(
+      `SELECT timer FROM userTasks WHERE userId = ? AND taskId = ?`,
+      [userId, taskId]
+    )
+    console.log(userId, taskId, timeToAdd)
+    console.log(oldTime)
+    const newTime = oldTime + timeToAdd
+    
     return this.dao.run(
       `UPDATE userTasks SET timer = ? WHERE userId = ? AND taskId = ?`,
-      [userId, taskId, time]
+      [userId, taskId, newTime]
     )
   }
 }
