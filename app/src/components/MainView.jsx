@@ -23,7 +23,7 @@ export function MainView({ user }) {
     }
 
     getTasks(user).then(data => setTasks(data));
-  }, [])
+  }, [user])
 
   function openTaskView() {
     setView("tasks");
