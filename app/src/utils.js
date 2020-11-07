@@ -33,10 +33,18 @@ export async function getActivityBreaks() {
 
   let response = await fetch(url);
   let data = await response.json();
-
   return data;
 }
 
+export async function getCourseByTask(courseId) {
+  let url = new URL("http://localhost:8000/getCourse");
+  let params = { courseId: courseId };
+  url.search = new URLSearchParams(params).toString();
+
+  let response = await fetch(url);
+  let data = await response.json();
+  return data;
+}
 
 export async function markCompleted(user, task) {
   const XHR = new XMLHttpRequest();

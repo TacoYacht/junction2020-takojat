@@ -5,7 +5,7 @@ import Timecode from "react-timecode";
 
 import Checked from "../assets/Checked.svg";
 import Unchecked from "../assets/Unchecked.svg";
-import { markCompleted, addTask } from "../utils.js";
+import { markCompleted, addTask, getCourseByTask } from "../utils.js";
 
 function AddNewTask({ user }) {
   const [formData, setFormData] = useState({ name: "", description: "", userId: user.id });
@@ -40,7 +40,6 @@ function AddNewTask({ user }) {
 
 function TaskListItem({ task, onClick }) {
   const [completed, setCompleted] = useState(task.completed === "true");
-  const course = task.owner ? task.owner.name : "Course name";
 
   function markTaskComplete() {
     if (completed) {
@@ -52,6 +51,16 @@ function TaskListItem({ task, onClick }) {
     }
   }
 
+  function getCourseForTask() {
+    if (task.courseId) {
+      let course = getCourseByTask(task.courseId);
+      console.log(course);
+      return course.name;
+    } else {
+      return "Own task";
+    }
+  }
+
   const checkbox = completed ? <img src={Checked} alt="checked" /> : <img src={Unchecked} alt="unchecked" />;
 
   return(
@@ -59,7 +68,7 @@ function TaskListItem({ task, onClick }) {
       <div className="checkbox" onClick={markTaskComplete}>{checkbox}</div>
       <div className="task-info" onClick={onClick}>
         <span>{task.name}</span>
-        <span>{course}</span>
+        <span>{getCourseForTask()}</span>
         <span>{task.description}</span>
       </div>
       <div className="start-task" onClick={onClick}>
@@ -72,6 +81,7 @@ function TaskListItem({ task, onClick }) {
 
 export function TaskList({ user, tasks, setOpenTask }) {
   const [showAddNew, setShowAddNew] = useState(false);
+  const hasTasks = tasks.length > 0;
 
   function renderNoTasks() {
     return (
@@ -99,7 +109,7 @@ export function TaskList({ user, tasks, setOpenTask }) {
       <div className="welcome-view">
         <div className="container">
           <h3>{"Hello, " + user.name + "!"}</h3>
-          {tasks.length > 0 ? renderTasks() : renderNoTasks()}
+          {hasTasks ? renderTasks() : renderNoTasks()}
         </div>
       </div>
       <div className="add-task">
