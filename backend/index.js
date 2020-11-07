@@ -2,6 +2,7 @@
 import { AppDAO } from './dao.js'
 import { getTasksForUser } from './getTasks.js'
 import { TaskRepository } from './taskRepository.js'
+import { UserRepository } from './userRepository.js'
 import express from 'express'
 import cors from 'cors'
 
@@ -15,6 +16,8 @@ function createDB() {
 
 const dao = createDB()
 const taskRepo = new TaskRepository(dao)
+const userRepo = new UserRepository(dao)
+userRepo.createTable()
 taskRepo.createTable()
 
 app.use(cors())
