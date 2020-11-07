@@ -1,21 +1,15 @@
 // userRepository.js
 
 // Some dummy data
-// const users = [
-//     {
-//       name: 'Read chapter ',
-//       description: ''
-//     }
-//   ]
-  
-  export class UserRepository {
-    constructor(dao) {
-      this.dao = dao
-    }
-  
-    createTable() {
-      console.log('Creating user table...')
-      const sql = `
+
+export class UserRepository {
+  constructor(dao) {
+    this.dao = dao
+  }
+
+  createTable() {
+    console.log('Creating user table...')
+    const sql = `
       CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT UNIQUE)`
@@ -32,6 +26,12 @@
       return this.dao.get(
         `SELECT * FROM users WHERE id = ?`,
         [id])
+    }
+
+    getByName(name) {
+      return this.dao.get(
+        `SELECT * FROM users WHERE name = ?`,
+        [name])
     }
   
     delete(id) {
