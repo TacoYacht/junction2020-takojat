@@ -1,12 +1,11 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import * as _ from "underscore";
 import classNames from "classnames";
+import Timecode from "react-timecode";
 
 import Checked from "../assets/Checked.svg";
 import Unchecked from "../assets/Unchecked.svg";
 import { markCompleted, addTask } from "../utils.js";
-
-const eva = require("eva-icons");
 
 function AddNewTask({ user }) {
   const [formData, setFormData] = useState({ name: "", description: "", userId: user.id });
@@ -67,7 +66,7 @@ function TaskListItem({ task, onClick }) {
       </div>
       <div className="start-task" onClick={onClick}>
         <i data-eva="play" data-eva-fill="#ff0000" data-eva-animation="pulse" />
-        <span>{task.timer}</span>
+        <Timecode time={task.timer} />
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as _ from "underscore";
+import * as eva from "eva-icons";
 
 import './styles/App.css';
 import { getUsers } from "./utils.js";
@@ -13,8 +14,9 @@ function App() {
   // function handleInput(e) {
   //   setUsername(e.target.value);
   // }
-
+  
   useEffect(() => {
+    eva.replace();
     getUsers().then(data => setUsers(data));
   }, [])
 
