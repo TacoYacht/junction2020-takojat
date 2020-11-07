@@ -103,7 +103,7 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`)
 })
 
-app.post('/complete', (req, res) => {
+app.post('/completeTask', (req, res) => {
   const userid = req.body.userId
   const taskid = req.body.taskId
   userTaskRepo.complete(userid, taskid)
