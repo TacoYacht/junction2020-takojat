@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import * as _ from "underscore";
 
 import './styles/App.css';
@@ -6,12 +6,17 @@ import { getUsers } from "./utils.js";
 import { MainView } from './components/MainView';
 
 function App() {
+  const [users, setUsers] = useState();
   const [user, setUser] = useState();
   // const [username, setUsername] = useState("");
 
   // function handleInput(e) {
   //   setUsername(e.target.value);
   // }
+
+  useEffect(() => {
+    getUsers().then(data => setUsers(data));
+  }, [])
 
   function openApp(user) {
     setUser(user);
@@ -24,8 +29,8 @@ function App() {
       return <MainView user={user} />
     } else {
       return (
-        <div className="enter-user">
-          {_.map(getUsers(), (user, i) => {
+        <div className="user-list">
+          {_.map(users, (user, i) => {
             return(
               <button key={i} onClick={() => openApp(user)}>{user.name}</button>
             );

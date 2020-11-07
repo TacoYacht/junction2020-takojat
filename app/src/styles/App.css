@@ -20,21 +20,19 @@ article {
   flex-direction: column;
 }
 
-.enter-user {
+.user-list {
   position: absolute;
   height: 30%;
   width: 30%;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-}
-
-.enter-user form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  height: 40%;
-  justify-content: space-between;
+}
+
+.user-list button {
+  margin: 10px 0;
 }
 
 .enter-user form > element {
