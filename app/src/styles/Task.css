@@ -2,17 +2,7 @@
   height: 100%;
   width: 100%;
   position: relative;
-  background-color: #FFF6EF;
-}
-
-.task-view .container {
-  position: absolute;
-  width: 80%;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  display: flex;
-  flex-direction: column;
+  background: var(--light-blue-gradient);
 }
 
 .timer {
@@ -29,7 +19,7 @@
   border: 4px solid rgba(255, 255, 255, 0.5);
   border-radius: 100%;
   box-sizing: border-box;
-  background: var(--sunset-gradient);
+  background: var(--sunday-morning-gradient);
 }
 
 .timer-button:hover {

@@ -1,14 +1,16 @@
 @import "./fonts.css";
 @import "./TaskList.css";
 @import "./Task.css";
+@import "./TakeABreak.css";
 
 :root {
   --text-secondary: rgba(0, 0, 0, 0.65);
-  --sunset-gradient: linear-gradient(180deg, #FFCEA9 0%, #FFAC98 100%);
+  --sunday-morning-gradient: linear-gradient(349.16deg, rgba(82, 167, 193, 0) 4.4%, rgba(179, 246, 216, 0.74) 94.98%), #52A7C1;
+  --light-blue-gradient: linear-gradient(349.16deg, rgba(194, 231, 242, 0) 4.4%, rgba(252, 254, 255, 0.74) 94.98%), #F5FCFF;
 }
 
 html {
-  background: #F9FAFC, 100%;
+  background: var(--light-blue-gradient);
   height: 100%;
   width: 100%;
 }
@@ -24,7 +26,7 @@ article {
   position: absolute;
   height: 30%;
   width: 30%;
-  top: 50%;
+  top: 30%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   display: flex;
@@ -41,19 +43,23 @@ article {
 
 
 .header {
-  height: 100px;
-  background: var(--sunset-gradient);
+  height: 170px;
+  background-image: url("../assets/HeaderWaves.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: space-between;
-  padding: 0 40px 0 20px;
+  padding: 40px 40px 0 20px;
 }
 
 .aalto-logo {
   display: flex;
   flex-direction: row;
-  align-items: center;
+}
+
+.aalto-logo img {
+  top: 0;
 }
 
 .aalto-logo .essentials {
@@ -88,14 +94,18 @@ article {
   height: 100%;
   width: 100%;
   position: relative;
-  background-color: #FFF6EF;
+  background: var(--light-blue-gradient);
 }
 
-.welcome-view .container {
+.container {
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   display: flex;
   flex-direction: column;
+}
+
+.task-view .container {
+  width: 80%;
 }

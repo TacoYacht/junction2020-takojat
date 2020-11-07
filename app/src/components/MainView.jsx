@@ -3,8 +3,8 @@ import * as _ from "underscore";
 import AaltoLogo from "../assets/A_.svg";
 
 import { getTasks } from "../utils.js";
-import { TakeABreak } from "./TakeABreak";
 
+import { TakeABreak } from "./TakeABreak";
 import { Task } from "./Task";
 import { TaskList } from "./TaskList";
 

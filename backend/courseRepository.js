@@ -26,6 +26,12 @@ export class CourseRepository {
       [id])
   }
 
+  getByName(name) {
+    return this.dao.get(
+      `SELECT * FROM courses WHERE name = ?`,
+      [name])
+  }
+
   delete(id) {
     return this.dao.run(
       `DELETE FROM courses WHERE id = ?`,

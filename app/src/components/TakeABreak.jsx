@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect } from "react";
 import * as _ from "underscore";
 
-import { getPractices } from "../utils.js";
+import { getMindfullnessPractices, getActivityBreaks } from "../utils.js";
 
 function Practice({ practice }) {
   function goToPractice() {
@@ -11,32 +11,47 @@ function Practice({ practice }) {
   return (
     <div className="practice-card">
       <img src={practice.imgpath} alt={practice.name} />
-      <span>{practice.title}</span>
+      <h4>{practice.title}</h4>
       <span>{practice.description}</span>
-      <span>{practice.duration}</span>
-      <div className="play-practice">
-        <button onClick={goToPractice}>{"Play"}</button>
-      </div>
+      <span className="caption">{practice.duration + " min"}</span>
+      <button className="play-practice-button" onClick={goToPractice}><i data-eve="" />{"Play"}</button>
     </div>
   );
 }
 
 export function TakeABreak({ user }) {
-  const [practices, setPractices] = useState([]);
+  const [mindfullness, setMindfullness] = useState([]);
+  const [breaks, setBreaks] = useState([]);
 
   useEffect(() => {
-    getPractices().then(data => setPractices(data));
+    getMindfullnessPractices().then(data => setMindfullness(data));
+    getActivityBreaks().then(data => setBreaks(data));
   }, []);
 
   return (
     <Fragment>
       <div className="take-a-break">
         <div className="container">
-          {_.map(practices, (practice, i) => {
-            return (
-              <Practice practice={practice} key={i} />
-            );
-          })}
+          <div className="practice-category">
+            <h3>{"Mindfullness"}</h3>
+            <div className="practices">
+              {_.map(mindfullness, (practice, i) => {
+                return (
+                  <Practice practice={practice} key={i} />
+                );
+              })}
+            </div>
+          </div>
+          <div className="practice-category">
+            <h3>{"Activity breaks"}</h3>
+            <div className="practices">
+              {_.map(breaks, (practice, i) => {
+                return (
+                  <Practice practice={practice} key={i} />
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>  
     </Fragment>
