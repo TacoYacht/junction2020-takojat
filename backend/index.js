@@ -8,7 +8,10 @@ import { CourseRepository } from './courseRepository.js'
 import { CourseTaskRepository } from './courseTaskRepository.js'
 import express from 'express'
 import cors from 'cors'
-import usersToPushToDbJSON from './dummyUsers.js'
+
+// dummy data sources
+import usersToPushToDbJSON from './dummy/dummyUsers.js'
+import coursesToPushToDbJSON from './dummy/dummyCourses.js'
 
 const app = express()
 const port = 8000
@@ -28,10 +31,10 @@ const courseTaskRepo = new CourseTaskRepository(dao)
 
 // Create initial tables
 await Promise.all([userRepo.createTable(), taskRepo.createTable(), courseRepo.createTable()])
-await courseTaskRepo.createTable()
-await userTaskRepo.createTable()
+await courseTaskRepo.createTable() // Needs course and tasks
+await userTaskRepo.createTable() // Needs User and tasks
 
-// Fill tables with dummydata
+// Fill usertable with dummydata
 if ((await userRepo.getAll()).length === 0) {
   console.log('Filling users table with dummy data')
   usersToPushToDbJSON.map(user => {
@@ -39,6 +42,13 @@ if ((await userRepo.getAll()).length === 0) {
   })
 }
 
+// Fill coursetable with dummydata
+if ((await courseRepo.getAll()).length === 0) {
+  console.log('Filling courses table with dummy data')
+  coursesToPushToDbJSON.map(course => {
+    courseRepo.create(course.name)
+  })
+}
 
 app.use(cors())
 
