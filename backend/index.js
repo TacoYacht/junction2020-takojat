@@ -15,6 +15,7 @@ function createDB() {
 
 const dao = createDB()
 const taskRepo = new TaskRepository(dao)
+taskRepo.createTable()
 
 app.use(cors())
 
