@@ -6,6 +6,7 @@ import { UserRepository } from './userRepository.js'
 import { UserTaskRepository } from './userTaskRepository.js'
 import { CourseRepository } from './courseRepository.js'
 import { CourseTaskRepository } from './courseTaskRepository.js'
+import { PracticeRepository } from './practiceRepository.js'
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
@@ -30,9 +31,10 @@ const userRepo = new UserRepository(dao)
 const userTaskRepo = new UserTaskRepository(dao)
 const courseRepo = new CourseRepository(dao)
 const courseTaskRepo = new CourseTaskRepository(dao)
+const practiceRepo = new PracticeRepository(dao)
 
 // Create initial tables
-await Promise.all([userRepo.createTable(), taskRepo.createTable(), courseRepo.createTable()])
+await Promise.all([userRepo.createTable(), taskRepo.createTable(), courseRepo.createTable(), practiceRepo.createTable()])
 await courseTaskRepo.createTable() // Needs course and tasks
 await userTaskRepo.createTable() // Needs User and tasks
 
@@ -84,8 +86,8 @@ app.get('/getTasks', async (req, res) => {
   } else if (isNaN(userId)) {
     res.status(400).send('User id should be number')
   } else {
-      const usersTasks = await getTasksForUser(userId, userTaskRepo, taskRepo)
-      res.send(usersTasks)
+    const usersTasks = await getTasksForUser(userId, userTaskRepo, taskRepo)
+    res.send(usersTasks)
   }
 })
 
@@ -108,4 +110,9 @@ app.post('/completeTask', (req, res) => {
   const taskid = req.body.taskId
   userTaskRepo.complete(userid, taskid)
   res.status(204).send('Task completed')
+})
+
+app.get('/getPractices', async (req, res) => {
+  const practices = await practices.getAll()
+  res.send(practices)
 })
