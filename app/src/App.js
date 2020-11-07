@@ -24,8 +24,6 @@ function App() {
     setUser(user);
   }
 
-  console.log(getUsers())
-
   function renderContent() {
     if (user) {
       return <MainView user={user} />

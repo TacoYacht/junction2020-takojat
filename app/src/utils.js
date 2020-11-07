@@ -33,7 +33,18 @@ export async function getActivityBreaks() {
 
   let response = await fetch(url);
   let data = await response.json();
+  return data;
+}
 
+export async function getCourseByTask(task) {
+  let url = new URL("http://localhost:8000/getCourse");
+  let courseId = task.courseId || 0;
+  let params = { courseId: courseId };
+  url.search = new URLSearchParams(params).toString();
+
+  let response = await fetch(url);
+  console.log(response);
+  let data = await response.json();
   return data;
 }
 
