@@ -1,12 +1,4 @@
-// task_repository.js
-
-// Some dummy data
-const tasks = [
-  {
-    name: 'Read chapter ',
-    description: ''
-  }
-]
+// taskRepository.js
 
 export class TaskRepository {
   constructor(dao) {
