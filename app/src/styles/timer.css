@@ -1,0 +1,8 @@
+.timer-button {
+  height: 220px;
+  width: 220px;
+  left: 610px;
+  top: 375px;
+  border-radius: 0px;
+  background: linear-gradient(180deg, #FFCEA9 0%, #FFAC98 100%);
+}

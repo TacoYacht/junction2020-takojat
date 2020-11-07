@@ -1,13 +1,13 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { render } from "react-dom";
 import * as _ from "underscore";
+import classNames from "classnames";
+import { TaskTimer } from "./TaskTimer";
+
 import { Task } from "./Task";
 
-function AddNewTask() {
-  const [formData, setFormData] = useState({ name: "", description: "" });
-
-  // function handleNameInput(e) {
-  //   setFormData(...formData, { name: e.target.value });
-  // }
+function AddNewTask({ user }) {
+  const [formData, setFormData] = useState({ name: "", description: "", userId: user.id });
 
   function handleInput(e) {
     setFormData({...formData, [e.target.name]: e.target.value.trim() });
@@ -15,8 +15,6 @@ function AddNewTask() {
 
   function handleAddNewTask(e) {
     e.preventDefault();
-    console.log( 'Sending data' );
-
     const XHR = new XMLHttpRequest();
 
     let urlEncodedData = "",
@@ -32,43 +30,58 @@ function AddNewTask() {
     // the '+' character; matches the behaviour of browser form submissions.
     urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
 
-    // Define what happens on successful data submission
     XHR.addEventListener( 'load', function(event) {
       alert( 'Yeah! Data sent and response loaded.' );
     } );
 
-    // Define what happens in case of error
     XHR.addEventListener( 'error', function(event) {
       alert( 'Oops! Something went wrong.' );
     } );
 
-    // Set up our request
-    XHR.open( 'POST', 'http://localhost:8000/' );
-
-    // Add the required HTTP header for form data POST requests
+    XHR.open( 'POST', 'http://localhost:8000/tasks' );
     XHR.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
-
-    // Finally, send our data.
     XHR.send( urlEncodedData );
   }
 
   return (
     <div className="new-task-information">
       <form onSubmit={handleAddNewTask}>
-        <label htmlFor="name">{"Task name"}</label>
-        <input type="text" name="name" onChange={handleInput} />
-        <label htmlFor="description">{"Task description"}</label>
-        <input type="text" name="description" onChange={handleInput} />
-        <button type="submit">{"Add"}</button>
+        <p>
+          <label htmlFor="name">{"Task name"}</label>
+          <input type="text" name="name" onChange={handleInput} />
+        </p>
+        <p>
+          <label htmlFor="description">{"Task description"}</label>
+          <input type="text" name="description" onChange={handleInput} />
+        </p>
+        <p>
+          <button type="submit">{"Add"}</button>
+        </p>
       </form>
     </div>
   )
 }
 
-export function TaskList() {
-  // const list = [{ name: "task 1", description: "task description" }, { name: "task 2", description: "task description" }];
+function TaskListItem({ task }) {
+  const [timerOn, setTimerOn] = useState(false);
+  const taskCompleted = task.completed === "true";
 
+  function toggleTimer() {
+    setTimerOn(!timerOn);
+  }
+
+  return(
+    <div className={classNames("task-list-item", { taskCompleted: "completed" })}>
+      <span>{task.name}</span>
+      <span>{task.cumulativeTime}</span>
+      <TaskTimer task={task} timerOn={timerOn} />
+    </div>
+  );
+}
+
+export function TaskList({ user }) {
   const [showAddNew, setShowAddNew] = useState(false);
+  const [openTask, setOpenTask] = useState(null);
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
@@ -78,31 +91,45 @@ export function TaskList() {
       Notification.requestPermission();
     }
 
-    getTasks().then(data => setTasks(data));
+    getTasks();
   }, [])
 
   async function getTasks() {
     let url = new URL("http://localhost:8000/getTasks");
-    let params = { userId: 123 };
+    let params = { userId: user.id };
     url.search = new URLSearchParams(params).toString();
 
     let response = await fetch(url);
     let data = await response.json();
-    return data;
+
+    setTasks(data);
   }
 
   return (
-    <Fragment>
-      <div className="task-list">
-        <h1>{"This is a list of tasks"}</h1>
-        {_.map(tasks, (task, i) => {
-          return (<Task task={task} key={i} />);
-        })}
-      </div>
-      <div className="add-task">
-        <button onClick={() => setShowAddNew(!showAddNew)}>{"Add new"}</button>
-        {showAddNew && <AddNewTask />}
-      </div>
-    </Fragment>
+    <article>
+      {!openTask && (
+        <Fragment>
+          <div className="welcome-view">
+            <div className="container">
+              <h3>{"Hello, " + user.name + "!"}</h3>
+              <h2>{"Here are your most important tasks for today"}</h2>
+              <div className="task-list">
+                {_.map(tasks, (task, i) => {
+                  return (
+                    <TaskListItem task={task} onClick={() => setOpenTask(task)} key={i} />
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+          <div className="add-task">
+            <button onClick={() => setShowAddNew(!showAddNew)}>{"Add new"}</button>
+            {showAddNew && <AddNewTask user={user} />}
+          </div>
+          
+        </Fragment>
+      )}
+      {openTask && <Task task={openTask} />}
+    </article>
   );
 }
