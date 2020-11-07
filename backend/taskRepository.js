@@ -16,10 +16,10 @@ export class TaskRepository {
     return this.dao.run(sql)
   }
 
-  create(name) {
+  create(name, description) {
     return this.dao.run(
-      'INSERT INTO tasks (name) VALUES (?)',
-      [name])
+      'INSERT INTO tasks (name, description) VALUES (?, ?)',
+      [name, description])
   }
 
   getById(id) {

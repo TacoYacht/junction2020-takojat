@@ -11,21 +11,23 @@ export class UserTaskRepository {
       CREATE TABLE IF NOT EXISTS usertasks (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         timer INTEGER DEFAULT 0,
-        FOREIGN KEY (id) REFERENCES users(userId),
-        FOREIGN KEY (id) REFERENCES tasks(taskId))`
+        userId INTEGER,
+        taskId INTEGER,
+        FOREIGN KEY (userId) REFERENCES users(id),
+        FOREIGN KEY (taskId) REFERENCES tasks(id))`
     return this.dao.run(sql)
   }
 
-  create(userid, taskid) {
+  create(userId, taskId) {
     return this.dao.run(
       'INSERT INTO userTasks (userId, taskId) VALUES (?, ?)',
-      [userid, taskid])
+      [userId, taskId])
   }
 
-  getByUserId(userid) {
-    return this.dao.get(
+  getByUserId(userId) {
+    return this.dao.all(
       `SELECT * FROM userTasks WHERE userId = ?`,
-      [id])
+      [userId])
   }
 
   delete(id) {

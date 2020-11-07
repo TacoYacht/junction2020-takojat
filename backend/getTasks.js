@@ -1,12 +1,5 @@
-export function getTasksForUser (userId, dao) {
-  return [
-    {
-      'name': 'task1',
-      'description': 'This is the first task'
-    },
-    {
-      'name': 'task2',
-      'description': 'This is the second task'
-    }
-]
+export async function getTasksForUser (userId, userTaskRepo, taskRepo) {
+  const usersTaskIds = (await userTaskRepo.getByUserId(userId)).map(row => row.taskId)
+  const tasks = await Promise.all(usersTaskIds.map(async taskId => taskRepo.getById(taskId)))
+  return tasks
 }
