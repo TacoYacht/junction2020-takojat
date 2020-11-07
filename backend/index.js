@@ -10,8 +10,8 @@ import express from 'express'
 import cors from 'cors'
 
 // dummy data sources
-import usersToPushToDbJSON from './dummy/dummyUsers.js'
-import coursesToPushToDbJSON from './dummy/dummyCourses.js'
+import dummyUsersJSON from './dummy/dummyUsers.js'
+import dummyCoursesJSON from './dummy/dummyCourses.js'
 import dummyTasksJSON from './dummy/dummyTasks.js'
 
 const app = express()
@@ -46,7 +46,7 @@ if ((await userRepo.getAll()).length === 0) {
 // Fill coursetable with dummydata
 if ((await courseRepo.getAll()).length === 0) {
   console.log('Filling courses table with dummy data')
-  coursesToPushToDbJSON.map(course => {
+  dummyCoursesJSON.map(course => {
     courseRepo.create(course.name)
   })
 }
