@@ -1,11 +1,20 @@
 // task_repository.js
 
-class TaskRepository {
+// Some dummy data
+const tasks = [
+  {
+    name: 'Read chapter ',
+    description: ''
+  }
+]
+
+export class TaskRepository {
   constructor(dao) {
     this.dao = dao
   }
 
   createTable() {
+    console.log('Creating tasks table...')
     const sql = `
     CREATE TABLE IF NOT EXISTS tasks (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -13,6 +22,7 @@ class TaskRepository {
       description TEXT,
       FOREIGN KEY (owner) REFERENCES users(userID))`
     return this.dao.run(sql)
+    console.log('..done!')
   }
 
   create(name) {
@@ -38,5 +48,3 @@ class TaskRepository {
     return this.dao.all(`SELECT * FROM tasks`)
   }
 }
-
-module.exports = TaskRepository;
