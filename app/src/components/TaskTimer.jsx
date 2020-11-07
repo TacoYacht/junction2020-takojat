@@ -14,12 +14,16 @@ export function TaskTimer({ task, timerOn }) {
 
   function addTimeForTask() {
     if (!!task) {
-      task.cumulativeTime = task.cumulativeTime + progress;
+      task.timer = task.timer + progress;
     }
   }
 
+  function onFinish() {
+    new Notification("Timer done!");
+  }
+
   return (
-    <Timer active={timerOn} duration={null} onTimeUpdate={onTimerUpdate} onStop={addTimeForTask}>
+    <Timer active={timerOn} duration={2500} onTimeUpdate={onTimerUpdate} onStop={addTimeForTask} onFinish={onFinish}>
       <Timecode />
     </Timer>
   );

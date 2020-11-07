@@ -20,6 +20,28 @@ article {
   flex-direction: column;
 }
 
+.enter-user {
+  position: absolute;
+  height: 30%;
+  width: 30%;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.enter-user form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 40%;
+  justify-content: space-between;
+}
+
+.enter-user form > element {
+  margin: 10px 0;
+}
+
+
 .header {
   height: 100px;
   background: var(--sunset-gradient);
