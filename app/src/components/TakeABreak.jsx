@@ -23,7 +23,7 @@ function Practice({ practice }) {
   );
 }
 
-export function TakeABreak({ user }) {
+export function TakeABreak() {
   const [mindfullness, setMindfullness] = useState([]);
   const [breaks, setBreaks] = useState([]);
 

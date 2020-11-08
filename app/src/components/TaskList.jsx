@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import * as _ from "underscore";
 import classNames from "classnames";
 import Timecode from "react-timecode";
@@ -8,9 +8,9 @@ import Unchecked from "../assets/Unchecked.svg";
 import Plus from "../assets/plus.svg";
 import MockCourseSelect from "../assets/MockCourseSelect.svg";
 
-import { markCompleted, addTask, getCourseByTask } from "../utils.js";
+import { getTasks, markCompleted, addTask, getCourseByTask } from "../utils.js";
 
-function AddNewTask({ user, onCancel }) {
+function AddNewTask({ user, onAdd, onCancel }) {
   const [formData, setFormData] = useState({ name: "", description: "", userId: user.id });
 
   function handleInput(e) {
@@ -20,7 +20,8 @@ function AddNewTask({ user, onCancel }) {
   function handleAddNewTask(e) {
     e.preventDefault();
     addTask(formData);
-    onCancel()
+    onAdd();
+    onCancel();
   }
 
   return (
@@ -39,17 +40,19 @@ function AddNewTask({ user, onCancel }) {
   )
 }
 
-function TaskListItem({ task, onClick }) {
+function TaskListItem({ user, task, onClick, loadTasks }) {
   const [completed, setCompleted] = useState(task.completed === 1);
 
   function markTaskComplete() {
     if (completed) {
-      markCompleted(task, false);
+      markCompleted(user, task, 0);
       setCompleted(false);
     } else {
-      markCompleted(task, true);
+      markCompleted(user, task, 1);
       setCompleted(true);
     }
+
+    loadTasks();
   }
 
   function getCourseForTask() {
@@ -80,20 +83,29 @@ function TaskListItem({ task, onClick }) {
   );
 }
 
-export function TaskList({ user, tasks, setOpenTask }) {
+export function TaskList({ user, setOpenTask }) {
   const [showAddNew, setShowAddNew] = useState(false);
-  const hasTasks = tasks.length > 0;
-  const message = hasTasks ? "Here are your most important tasks for today" : "Congratulations! You've done it all.";
+  const [allTasks, setAllTasks] = useState([]);
+  const [completedTasks, setCompletedTasks] = useState([]);
+  const [unfinishedTasks, setUnfinishedTasks] = useState([]);
 
-  function getCompletedTasks() {
-    return _.filter(tasks, task => { return task.completed === 1 });
+  const hasTasks = allTasks.length > 0;
+  const message = hasTasks ? "Here are your most important tasks for today" : "Congratulations! You've done it all."; 
+  
+  useEffect(() => {
+    loadTasks();
+  }, [user])
+
+  useEffect(() => {
+    setCompletedTasks(_.filter(allTasks, task => { return task.completed === 1 }));
+    setUnfinishedTasks(_.filter(allTasks, task => { return task.completed === 0 }));
+  }, [allTasks])
+
+  function loadTasks() {
+    getTasks(user).then(data => setAllTasks(data))
   }
 
-  function getUnfinishedTasks() {
-    return _.filter(tasks, task => { return task.completed === 0 });
-  }
-
-  const completedTasksCount = getCompletedTasks().length;
+  const completedTasksCount = completedTasks.length;
   const hasFinishedTasks = completedTasksCount > 0;
   const completedMessage = hasFinishedTasks ? "You have already completed " + completedTasksCount + " tasks!" : "";
 
@@ -101,9 +113,9 @@ export function TaskList({ user, tasks, setOpenTask }) {
     return (
       <Fragment>
         <div className="task-list">
-          {_.map(getUnfinishedTasks(), (task, i) => {
+          {_.map(unfinishedTasks, (task, i) => {
             return (
-              <TaskListItem task={task} onClick={() => setOpenTask(task)} key={i} />
+              <TaskListItem user={user} task={task} loadTasks={loadTasks} onClick={() => setOpenTask(task)} key={i} />
             );
           })}
         </div>
@@ -115,9 +127,9 @@ export function TaskList({ user, tasks, setOpenTask }) {
     return (
       <Fragment>
         <div className="task-list">
-          {_.map(getCompletedTasks(), (task, i) => {
+          {_.map(completedTasks, (task, i) => {
             return (
-              <TaskListItem task={task} onClick={() => {}} key={i} />
+              <TaskListItem user={user} task={task} loadTasks={loadTasks} onClick={() => {}} key={i} />
             );
           })}
         </div>
@@ -137,7 +149,7 @@ export function TaskList({ user, tasks, setOpenTask }) {
                 <img src={Plus} />
                 <span>{"Create new task"}</span>
               </button>
-              {showAddNew && <AddNewTask user={user} onCancel={() => setShowAddNew(false)} />}
+              {showAddNew && <AddNewTask user={user} onAdd={loadTasks} onCancel={() => setShowAddNew(false)} />}
             </div>
             {hasTasks && renderTasks()}
           </div>

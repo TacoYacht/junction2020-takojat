@@ -2,8 +2,6 @@ import React, { Fragment, useEffect, useState } from "react";
 import * as _ from "underscore";
 import AaltoLogo from "../assets/A.svg";
 
-import { getTasks } from "../utils.js";
-
 import { TakeABreak } from "./TakeABreak";
 import { Task } from "./Task";
 import { TaskList } from "./TaskList";
@@ -11,11 +9,10 @@ import { TaskList } from "./TaskList";
 export function MainView({ user }) {
   const [openTask, setOpenTask] = useState(null);
   const [view, setView] = useState("tasks");
-  const [tasks, setTasks] = useState([]);
 
   const showTaskList = view === "tasks" && !openTask;
-  const showTimer = view === "timer";
-  const showPractices = view === "break";
+  const showTimer = view === "timer" && !openTask;
+  const showPractices = view === "break" && !openTask;
 
   useEffect(() => {
     if (!("Notification" in window)) {
@@ -23,9 +20,7 @@ export function MainView({ user }) {
     } else {
       Notification.requestPermission();
     }
-
-    getTasks(user).then(data => setTasks(data));
-  }, [user])
+  }, [])
 
   function openTaskView() {
     setView("tasks");
@@ -45,10 +40,10 @@ export function MainView({ user }) {
           <span onClick={() => setView("break")}>{"Take a break"}</span>
         </div>
       </div>
-      {showTaskList && <TaskList user={user} tasks={tasks} setOpenTask={setOpenTask} />}
+      {showTaskList && <TaskList user={user} setOpenTask={setOpenTask} />}
       {openTask && <Task task={openTask} user={user} />}
       {showTimer && <Task task={null} user={user} />}
-      {showPractices && <TakeABreak user={user} />}
+      {showPractices && <TakeABreak />}
     </Fragment>
   );
 }
