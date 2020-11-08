@@ -14,7 +14,7 @@ The course staff will receive REAL data of how much students spent time completi
 
 Submitted for [Junction Connected 2020](https://connected.hackjunction.com/) -hackathon for the *Sustain Your Mind* -challenge.
 
-## How to use
+## How to use – Demo
 
 You can try the Figma design prototype with limited inteactions: https://www.figma.com/proto/QrT7PKPBi9CcfhjjC1lvcw/Junction-2020?node-id=105%3A2&viewport=591%2C510%2C0.061015449464321136&scaling=min-zoom
 
