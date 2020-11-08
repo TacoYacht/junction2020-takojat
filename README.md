@@ -1,6 +1,6 @@
 # A" Essentials
 
-> Start working smarter, more self-coordinated way and be well. Save your mind for the essentials in your life.
+> Start working smarter, a more self-coordinated way and be well. Save your mind for the essentials in your life.
 
 ## Project Description
 
