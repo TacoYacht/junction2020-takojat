@@ -46,11 +46,10 @@ article {
   height: 170px;
   background-image: url("../assets/HeaderWaves.svg");
   background-repeat: no-repeat;
-  background-size: cover;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 40px 40px 0 20px;
+  padding: 20px 40px;
 }
 
 .aalto-logo {
@@ -59,7 +58,7 @@ article {
 }
 
 .aalto-logo img {
-  top: 0;
+  align-self: baseline;
 }
 
 .aalto-logo .essentials {
