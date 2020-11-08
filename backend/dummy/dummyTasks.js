@@ -1,6 +1,6 @@
 export default [
     {
-        "name": "Do homework",
+        "name": "C",
         "description": "This is very important task"
     },
     {
@@ -12,11 +12,7 @@ export default [
         "description": "Koodaa Mari paremmin"
     },
     {
-        "name": "Take a break",
-        "description": "Nii Mari!"
-    },
-    {
-        "name": "Thevenin menetelmä",
+        "name": "Study Theven's method",
         "description": "Kurssin Piirianalyysi II, 1. palautus"
     },
     {

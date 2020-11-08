@@ -140,6 +140,7 @@ app.post('/addTask', async (req, res) => {
 
 app.post('/updateTime', async (req, res) => {
   const { userId, taskId, timeToAdd } = req.body
+  console.log("Adding timer value:" + timeToAdd)
   await userTaskRepo.increaseTimer(userId, taskId, timeToAdd)
   res.status(204).send('Time added to the specified task.')
 })

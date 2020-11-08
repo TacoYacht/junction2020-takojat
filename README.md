@@ -19,15 +19,15 @@ Submitted for [Junction Connected 2020](https://connected.hackjunction.com/) -ha
 1. Clone repository
 
 2. Install tools and start running backend
-´´´
+```
 cd backend
 npm install
 npm start
-´´´
+```
 
 3. Install tools and start running frontend
-´´´
+```
 cd App
 npm install
 npm start
-´´´
+```
