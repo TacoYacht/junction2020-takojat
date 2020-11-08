@@ -12,7 +12,7 @@ import MockCourseSelect from "../assets/MockCourseSelect.svg";
 
 import { getTasks, markCompleted, addTask, getCourseByTask } from "../utils.js";
 
-function AddNewTask({ user, onAdd, onCancel }) {
+function AddNewTask({ user, loadTasks, onCancel }) {
   const [formData, setFormData] = useState({ name: "", description: "", userId: user.id });
 
   function handleInput(e) {
@@ -22,7 +22,7 @@ function AddNewTask({ user, onAdd, onCancel }) {
   async function handleAddNewTask(e) {
     e.preventDefault();
     await addTask(formData);
-    await onAdd();
+    await loadTasks();
     onCancel();
   }
 
@@ -156,7 +156,7 @@ export function TaskList({ user }) {
                 <img src={Plus} />
                 <span>{"Create new task"}</span>
               </button>
-              {showAddNew && <AddNewTask user={user} onAdd={loadTasks} onCancel={() => setShowAddNew(false)} />}
+              {showAddNew && <AddNewTask user={user} loadTasks={loadTasks} onCancel={() => setShowAddNew(false)} />}
             </div>
             {hasTasks && <Tasks tasks={unfinishedTasks} user={user} loadTasks={loadTasks} />}
           </div>

@@ -122,7 +122,7 @@ app.get('/getUsers', async (req, res) => {
 
 app.post('/addTask', async (req, res) => {
 
-  const { userId, name, description, courseId } = req.body
+  const { userId, name, description } = req.body
   if ((userId === undefined) || (name === undefined)) {
     res.status(400).send('Missing userId or task name.')
     return
@@ -130,8 +130,10 @@ app.post('/addTask', async (req, res) => {
   const ret_val1 = await taskRepo.create(name, description)
   const taskId = ret_val1.id
 
+  console.log("userId:" + userId + " name:" + name + " desc:" + description )
+
   // Create userTask relation with the given data
-  userTaskRepo.create(userId, taskId, courseId)
+  await userTaskRepo.create(userId, taskId)
 
   res.status(204).send('Task created.')
 })
@@ -150,7 +152,7 @@ app.post('/completeTask', async (req, res) => {
   const userid = req.body.userId
   const taskid = req.body.taskId
   const complete = req.body.completed
-  userTaskRepo.changeComplete(userid, taskid, complete)
+  await userTaskRepo.changeComplete(userid, taskid, complete)
   res.status(204).send('Task completed')
 })
 

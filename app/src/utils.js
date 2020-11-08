@@ -61,23 +61,35 @@ export async function markCompleted(user, task, completed) {
 }
 
 export async function addTask(formData) {
-  const XHR = new XMLHttpRequest();
+  return new Promise(function (resolve, reject) {
+    const XHR = new XMLHttpRequest();
 
-  let urlEncodedData = "",
-        urlEncodedDataPairs = [],
-        name;
+    let urlEncodedData = "",
+          urlEncodedDataPairs = [],
+          name;
 
-  // Turn the data object into an array of URL-encoded key/value pairs.
-  for( name in formData ) {
-    urlEncodedDataPairs.push( encodeURIComponent( name ) + '=' + encodeURIComponent( formData[name] ) );
-  }
+    // Turn the data object into an array of URL-encoded key/value pairs.
+    for( name in formData ) {
+      urlEncodedDataPairs.push( encodeURIComponent( name ) + '=' + encodeURIComponent( formData[name] ) );
+    }
 
-  // Combine the pairs into a single string and replace all %-encoded spaces to 
-  // the '+' character; matches the behaviour of browser form submissions.
-  urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
-  XHR.open( 'POST', 'http://localhost:8000/addTask' );
-  XHR.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
-  XHR.send( urlEncodedData );
+    // Combine the pairs into a single string and replace all %-encoded spaces to 
+    // the '+' character; matches the behaviour of browser form submissions.
+    urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
+    XHR.open( 'POST', 'http://localhost:8000/addTask' );
+    XHR.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
+    XHR.onload = function () {
+      if (this.status >= 200 && this.status < 300) {
+          resolve(XHR.response);
+      } else {
+          reject({
+              status: this.status,
+              statusText: XHR.statusText
+          });
+      }
+    };
+    XHR.send( urlEncodedData );
+  }); 
 }
 
 export async function updateTime(user, task, time) {
@@ -89,7 +101,7 @@ export async function updateTime(user, task, time) {
   urlEncodedDataPairs.push( encodeURIComponent( "timeToAdd" ) + '=' + encodeURIComponent( time ) );
   let urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
 
- XHR.open( 'POST', 'http://localhost:8000/updateTime' );
+  XHR.open( 'POST', 'http://localhost:8000/updateTime' );
   XHR.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
   XHR.send( urlEncodedData );
 }
