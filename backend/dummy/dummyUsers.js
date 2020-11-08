@@ -5,7 +5,7 @@ export default [
     },
     {
         "name": "Mari Hirvi",
-        "tasks": [2, 3, 4]
+        "tasks": [2, 3, 4, 6]
     },
     {
         "name": "Hessu Hopo",

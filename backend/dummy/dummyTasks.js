@@ -26,5 +26,11 @@ export default [
     {
         "name": "Mee töihin",
         "description": "Kurssin Korruption perusteet, 59. palautus"
-    }
+    },
+    {
+        "name": "Vaikuta jenkkien vaaleihin",
+        "description": "Tee facebookkiin valeuutisia."
+    },
+    
+
 ]
