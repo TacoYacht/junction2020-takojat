@@ -1,18 +1,20 @@
 import React, { useState, Fragment, useEffect } from "react";
 import * as _ from "underscore";
 
+import Meditation from "../assets/pixeltrue_meditation_1.svg";
+import Yoga from "../assets/pixeltrue_yoga_2.svg";
 import { getMindfullnessPractices, getActivityBreaks } from "../utils.js";
 
 function Practice({ practice }) {
   function goToPractice() {
     //todo
   }
-  
-  const image = require("../assets/" + practice.imgpath);
+
+  const Image = practice.type === "mindfullness" ? Meditation : Yoga;
 
   return (
     <div className="practice-card">
-      <img src={image} alt={practice.name} />
+      <img src={Image} alt={practice.name} />
       <h4>{practice.title}</h4>
       <span>{practice.description}</span>
       <span className="caption">{practice.duration + " min"}</span>
