@@ -19,10 +19,10 @@ function AddNewTask({ user, onAdd, onCancel }) {
     setFormData({...formData, [e.target.name]: e.target.value.trim() });
   }
 
-  function handleAddNewTask(e) {
+  async function handleAddNewTask(e) {
     e.preventDefault();
-    addTask(formData);
-    onAdd();
+    await addTask(formData);
+    await onAdd();
     onCancel();
   }
 
@@ -48,15 +48,15 @@ function TaskListItem({ user, task, loadTasks }) {
 
   const buttonText = active ? "Stop" : "Start";
 
-  function markTaskComplete() {
+  async function markTaskComplete() {
     if (completed) {
-      markCompleted(user, task, 0);
+      await markCompleted(user, task, 0);
     } else {
-      markCompleted(user, task, 1);
+      await markCompleted(user, task, 1);
     }
 
     setCompleted(!completed);
-    loadTasks();
+    await loadTasks();
   }
 
   function toggleTimer() {
@@ -121,8 +121,7 @@ export function TaskList({ user }) {
   const [allTasks, setAllTasks] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
   const [unfinishedTasks, setUnfinishedTasks] = useState([]);
-
-  const hasTasks = allTasks.length > 0;
+  const hasTasks = unfinishedTasks.length > 0;
   const message = hasTasks ? "Here are your most important tasks for today" : "Congratulations! You've done it all."; 
   
   useEffect(() => {
@@ -130,17 +129,20 @@ export function TaskList({ user }) {
   }, [user])
 
   useEffect(() => {
-    setCompletedTasks(_.filter(allTasks, task => { return task.completed === 1 }));
-    setUnfinishedTasks(_.filter(allTasks, task => { return task.completed === 0 }));
+    setCompletedTasks(_.filter(allTasks, task => { return task.completed == 1 }));
+    setUnfinishedTasks(_.filter(allTasks, task => { return task.completed == 0 }));
   }, [allTasks])
 
   async function loadTasks() {
-    getTasks(user).then(data => setAllTasks(data))
+    getTasks(user).then(data => {
+      console.log(data);
+      setAllTasks(data);
+    });
   }
 
   const completedTasksCount = completedTasks.length;
   const hasFinishedTasks = completedTasksCount > 0;
-  const completedMessage = hasFinishedTasks ? "You have already completed " + completedTasksCount + " tasks!" : "";
+  const completedMessage = hasFinishedTasks ? "You have already completed " + completedTasksCount + " task(s)!" : "";
 
   return(
     <Fragment>

@@ -51,7 +51,7 @@ export async function markCompleted(user, task, completed) {
 
   let urlEncodedDataPairs = [];
   urlEncodedDataPairs.push( encodeURIComponent( "userId" ) + '=' + encodeURIComponent( user.id ) );
-  urlEncodedDataPairs.push( encodeURIComponent( "taskId" ) + '=' + encodeURIComponent( task.id ) );
+  urlEncodedDataPairs.push( encodeURIComponent( "taskId" ) + '=' + encodeURIComponent( task.taskId ) );
   urlEncodedDataPairs.push( encodeURIComponent( "completed" ) + '=' + encodeURIComponent( completed ) );
   let urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
 
