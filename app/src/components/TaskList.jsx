@@ -1,10 +1,12 @@
 import React, { Fragment, useState, useEffect } from "react";
 import * as _ from "underscore";
 import classNames from "classnames";
-import Timecode from "react-timecode";
+
+import { TaskTimer } from "./TaskTimer";
 
 import Checked from "../assets/Checked.svg";
 import Unchecked from "../assets/Unchecked.svg";
+import CheckboxActive from "../assets/CheckboxActive.svg";
 import Plus from "../assets/plus.svg";
 import MockCourseSelect from "../assets/MockCourseSelect.svg";
 
@@ -41,18 +43,24 @@ function AddNewTask({ user, onAdd, onCancel }) {
 }
 
 function TaskListItem({ user, task, onClick, loadTasks }) {
+  const [active, setActive] = useState(false);
   const [completed, setCompleted] = useState(task.completed === 1);
+
+  const buttonText = active ? "Stop" : "Start";
 
   function markTaskComplete() {
     if (completed) {
       markCompleted(user, task, 0);
-      setCompleted(false);
     } else {
       markCompleted(user, task, 1);
-      setCompleted(true);
     }
 
+    setCompleted(!completed);
     loadTasks();
+  }
+
+  function toggleTimer() {
+    setActive(!active);
   }
 
   function getCourseForTask() {
@@ -65,20 +73,32 @@ function TaskListItem({ user, task, onClick, loadTasks }) {
     }
   }
 
-  const checkbox = completed ? <img src={Checked} alt="checked" /> : <img src={Unchecked} alt="unchecked" />;
+  function getCheckbox() {
+    if (completed) {
+      return <img src={Checked} alt="checked" />;
+    } else if (active) {
+      return <img src={CheckboxActive} alt="active" />;
+    } else {
+      return <img src={Unchecked} alt="unchecked" />;
+    }
+  }
 
   return(
-    <div className={classNames("task-list-item", { "completed": completed })}>
-      <div className="checkbox" onClick={markTaskComplete}>{checkbox}</div>
+    <div className={classNames("task-list-item", { "completed": completed, "active": active })}>
+      <div className="checkbox" onClick={markTaskComplete}>{getCheckbox()}</div>
       <div className="task-info" onClick={onClick}>
         <span>{task.name}</span>
         <span>{getCourseForTask()}</span>
         <span>{task.description}</span>
       </div>
-      <div className="start-task" onClick={onClick}>
-        <i data-eva="play" data-eva-fill="#ff0000" data-eva-animation="pulse" />
-        <Timecode time={task.timer} format="HH:mm:ss" />
-      </div>
+      {!completed && (
+        <div className="task-actions">
+          <TaskTimer user={user} task={task} timerOn={active} />
+          <button className="toggle-task" onClick={toggleTimer}>
+            {buttonText}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
