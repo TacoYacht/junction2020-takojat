@@ -44,8 +44,7 @@ function AddNewTask({ user, loadTasks, onCancel }) {
 
 function TaskListItem({ user, task, loadTasks }) {
   const [active, setActive] = useState(false);
-  const [completed, setCompleted] = useState(task.completed === 1);
-
+  const completed = task.completed === 1;
   const buttonText = active ? "Stop" : "Start";
 
   async function markTaskComplete() {
@@ -54,8 +53,6 @@ function TaskListItem({ user, task, loadTasks }) {
     } else {
       await markCompleted(user, task, 1);
     }
-
-    setCompleted(!completed);
     await loadTasks();
   }
 
@@ -135,7 +132,6 @@ export function TaskList({ user }) {
 
   async function loadTasks() {
     getTasks(user).then(data => {
-      console.log(data);
       setAllTasks(data);
     });
   }

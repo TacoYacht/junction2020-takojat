@@ -44,13 +44,22 @@ article {
 
 
 .header {
+  position: relative;
   height: 170px;
-  background-image: url("../assets/HeaderWaves.svg");
-  background-repeat: no-repeat;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 20px 40px;
+  background-image: url("../assets/HeaderWaves.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  clear: both;
+  margin: 0;
+}
+
+.header::before {
+  content: ""; 
+  position: absolute;
 }
 
 .aalto-logo {
