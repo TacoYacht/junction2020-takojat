@@ -149,7 +149,7 @@ app.listen(port, () => {
 app.post('/completeTask', async (req, res) => {
   const userid = req.body.userId
   const taskid = req.body.taskId
-  const complete = req.body.complete
+  const complete = req.body.completed
   userTaskRepo.changeComplete(userid, taskid, complete)
   res.status(204).send('Task completed')
 })

@@ -46,12 +46,13 @@ export async function getCourseByTask(courseId) {
   return data;
 }
 
-export async function markCompleted(user, task) {
+export async function markCompleted(user, task, completed) {
   const XHR = new XMLHttpRequest();
 
   let urlEncodedDataPairs = [];
   urlEncodedDataPairs.push( encodeURIComponent( "userId" ) + '=' + encodeURIComponent( user.id ) );
   urlEncodedDataPairs.push( encodeURIComponent( "taskId" ) + '=' + encodeURIComponent( task.id ) );
+  urlEncodedDataPairs.push( encodeURIComponent( "completed" ) + '=' + encodeURIComponent( completed ) );
   let urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
 
   XHR.open( 'POST', 'http://localhost:8000/completeTask' );
