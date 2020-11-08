@@ -20,14 +20,14 @@ Submitted for [Junction Connected 2020](https://connected.hackjunction.com/) -ha
 
 2. Install tools and start running backend
 ```
-cd backend
+cd backend/
 npm install
 npm start
 ```
 
 3. Install tools and start running frontend
 ```
-cd App
+cd app/
 npm install
 npm start
 ```
