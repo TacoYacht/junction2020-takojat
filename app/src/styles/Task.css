@@ -5,6 +5,10 @@
   background: var(--light-blue-gradient);
 }
 
+.task-view .container {
+  width: 80%;
+}
+
 .timer {
   align-self: center;
   text-align-last: center;

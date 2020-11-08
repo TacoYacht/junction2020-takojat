@@ -76,7 +76,7 @@ if ((await userTaskRepo.getAll()).length === 0) {
   await Promise.all(dummyUsersJSON.map(async (user) => {
     const userId = (await userRepo.getByName(user.name)).id
     for (const taskId of user.tasks) {
-      userTaskRepo.create(userId, taskId)
+      taskId === 1 ? userTaskRepo.create(userId, taskId, null, 1) : userTaskRepo.create(userId, taskId)
     }
   }))
 }
@@ -120,19 +120,18 @@ app.get('/getUsers', async (req, res) => {
   res.send(users)
 })
 
-app.post('/addTask', (req, res) => {
+app.post('/addTask', async (req, res) => {
 
-  const { userId, name, description, taskId, courseId } = req.body
+  const { userId, name, description, courseId } = req.body
   if ((userId === undefined) || (name === undefined)) {
     res.status(400).send('Missing userId or task name.')
     return
   } 
-  else if (taskId === undefined) {
-    const ret_val1 = taskRepo.create(name, description)
-    const taskId = ret_val1.id 
-  } 
+  const ret_val1 = await taskRepo.create(name, description)
+  const taskId = ret_val1.id
+
   // Create userTask relation with the given data
-  const ret_val2 = userTaskRepo.create(userId, taskId, courseId)
+  userTaskRepo.create(userId, taskId, courseId)
 
   res.status(200).send('Task created.')
 })

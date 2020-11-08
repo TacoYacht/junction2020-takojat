@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import * as _ from "underscore";
-import AaltoLogo from "../assets/A_.svg";
+import AaltoLogo from "../assets/A.svg";
 
 import { getTasks } from "../utils.js";
 
