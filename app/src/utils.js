@@ -75,15 +75,6 @@ export async function addTask(formData) {
   // Combine the pairs into a single string and replace all %-encoded spaces to 
   // the '+' character; matches the behaviour of browser form submissions.
   urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
-
-  XHR.addEventListener( 'load', function(event) {
-    alert( 'Yeah! Data sent and response loaded.' );
-  } );
-
-  XHR.addEventListener( 'error', function(event) {
-    alert( 'Oops! Something went wrong.' );
-  } );
-
   XHR.open( 'POST', 'http://localhost:8000/addTask' );
   XHR.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
   XHR.send( urlEncodedData );
@@ -98,15 +89,7 @@ export async function updateTime(user, task, time) {
   urlEncodedDataPairs.push( encodeURIComponent( "timeToAdd" ) + '=' + encodeURIComponent( time ) );
   let urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
 
-  XHR.addEventListener( 'load', function(event) {
-    alert( 'Yeah! Data sent and response loaded.' );
-  } );
-
-  XHR.addEventListener( 'error', function(event) {
-    alert( 'Oops! Something went wrong.' );
-  } );
-
-  XHR.open( 'POST', 'http://localhost:8000/updateTime' );
+ XHR.open( 'POST', 'http://localhost:8000/updateTime' );
   XHR.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
   XHR.send( urlEncodedData );
 }
