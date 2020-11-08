@@ -136,9 +136,16 @@ export function getTimeUsed( milliseconds ) {
   day = Math.floor(hour / 24);
   hour = hour % 24;
 
-  let strD = day ? day + " days" : "";
-  let strH = hour ? hour + "h" : "";
-  let strM = minute ? minute + "min" : "";
-
-  return strD + strH + strM;
+  if (!day && !hour && !minute)
+  {
+    return "<1min";
+  }
+  else
+  {
+    let strD = day ? day + " days " : "";
+    let strH = hour ? hour + "h " : "";
+    let strM = minute ? minute + "min" : "";
+  
+    return  strD + strH + strM;
+  }
 }
