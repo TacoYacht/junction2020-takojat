@@ -125,3 +125,20 @@ export async function updateTime(user, task, time) {
     XHR.send( urlEncodedData );
   }); 
 }
+
+export function getTimeUsed( milliseconds ) {
+  var day, hour, minute, seconds;
+  seconds = Math.floor(milliseconds / 1000);
+  minute = Math.floor(seconds / 60);
+  seconds = seconds % 60;
+  hour = Math.floor(minute / 60);
+  minute = minute % 60;
+  day = Math.floor(hour / 24);
+  hour = hour % 24;
+
+  let strD = day ? day + " days" : "";
+  let strH = hour ? hour + "h" : "";
+  let strM = minute ? minute + "min" : "";
+
+  return strD + strH + strM;
+}

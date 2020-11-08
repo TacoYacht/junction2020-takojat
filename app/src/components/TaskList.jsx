@@ -2,7 +2,8 @@ import React, { Fragment, useState, useEffect } from "react";
 import * as _ from "underscore";
 import classNames from "classnames";
 
-import { TaskTimer } from "./TaskTimer";
+import Timer from "react-timer-wrapper";
+import Timecode from "react-timecode";
 
 import Checked from "../assets/Checked.svg";
 import Unchecked from "../assets/Unchecked.svg";
@@ -10,7 +11,7 @@ import CheckboxActive from "../assets/CheckboxActive.svg";
 import Plus from "../assets/plus.svg";
 import MockCourseSelect from "../assets/MockCourseSelect.svg";
 
-import { getTasks, markCompleted, addTask, getCourseByTask } from "../utils.js";
+import { getTasks, markCompleted, addTask, getCourseByTask, updateTime, getTimeUsed } from "../utils.js";
 
 function AddNewTask({ user, loadTasks, onCancel }) {
   const [formData, setFormData] = useState({ name: "", description: "", userId: user.id });
@@ -48,6 +49,8 @@ function TaskListItem({ user, task, loadTasks }) {
   const completed = task.completed === 1;
   const buttonText = active ? "Stop" : "Start";
   const showTimeUsed = !active && task.timer > 0;
+  const [time, setTime] = useState(0);
+  const [duration, setDuration] = useState(25 * 60 * 1000);
 
   useEffect(() => {
     if (task.courseId) getCourseForTask();
@@ -62,9 +65,18 @@ function TaskListItem({ user, task, loadTasks }) {
     await loadTasks();
   }
 
-  function toggleTimer() {
-    console.log(task.timer);
+  async function toggleTimer() {
     setActive(!active);
+    if (!!task) {
+      await updateTime(user, task, time);
+      await loadTasks();
+    }
+  }
+
+  async function onFinish() {
+    new Notification("Timer done!");
+    await updateTime(user, task, time);
+    await loadTasks();
   }
 
   async function getCourseForTask() {
@@ -81,6 +93,11 @@ function TaskListItem({ user, task, loadTasks }) {
     }
   }
 
+  function onTimerUpdate({time, duration}) {
+    setTime(time);
+    setDuration(duration);
+  }
+
   return(
     <div className={classNames("task-list-item", { "completed": completed, "active": active })}>
       <div className="checkbox" onClick={markTaskComplete}>{getCheckbox()}</div>
@@ -90,13 +107,18 @@ function TaskListItem({ user, task, loadTasks }) {
         <span>{task.description}</span>
       </div>
       {!completed && (
-        <div className="task-actions">
-          {active && <h3><TaskTimer user={user} task={task} timerOn={active} loadTasks={loadTasks} /></h3>}
+        <div className={classNames("task-actions", { "active": active })}>
+          {active && (
+            <h3>
+              <Timer active={active} duration={duration} onTimeUpdate={onTimerUpdate} onFinish={onFinish} />
+              <Timecode time={duration - time} format="mm:ss" />
+            </h3>
+          )}
           <button className="toggle-task" onClick={toggleTimer}>
             {buttonText}
           </button>
           {showTimeUsed && (
-            <span className="time-used">{"Already worked time: " + task.timer }</span>
+            <span className="time-used">{"Already worked time: " + getTimeUsed(task.timer) }</span>
           )}
         </div>
       )}
