@@ -4,7 +4,7 @@ import Timecode from "react-timecode";
 
 import { updateTime } from "../utils.js";
 
-export function TaskTimer({ user, task, timerOn }) {
+export function TaskTimer({ user, task, timerOn, loadTasks }) {
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(25 * 60 * 1000);
 
@@ -13,13 +13,15 @@ export function TaskTimer({ user, task, timerOn }) {
     setDuration(duration);
   }
 
-  function addTimeForTask() {
+  async function addTimeForTask() {
     if (!!task) {
-      updateTime(user, task, duration - time);
+      await updateTime(user, task, time);
+      await loadTasks();
     }
   }
 
   function onFinish() {
+    addTimeForTask();
     new Notification("Timer done!");
   }
 

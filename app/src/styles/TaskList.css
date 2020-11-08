@@ -234,3 +234,13 @@
 .new-task-information form button.cancel:hover {
   text-decoration: underline;
 }
+
+.time-used {
+  font-family: Lato;
+  font-size: 14px;
+  line-height: 142%;
+  text-align: right;
+  letter-spacing: 1px;
+  color: var(--text-tertiary);
+  align-self: center;
+}

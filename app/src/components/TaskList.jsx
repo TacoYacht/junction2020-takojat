@@ -46,6 +46,7 @@ function TaskListItem({ user, task, loadTasks }) {
   const [active, setActive] = useState(false);
   const completed = task.completed === 1;
   const buttonText = active ? "Stop" : "Start";
+  const showTimeUsed = !active && task.timer > 0;
 
   async function markTaskComplete() {
     if (completed) {
@@ -57,16 +58,19 @@ function TaskListItem({ user, task, loadTasks }) {
   }
 
   function toggleTimer() {
+    console.log(task.timer);
     setActive(!active);
   }
 
   function getCourseForTask() {
+    let name = "Personal task";
     if (task.courseId) {
-      let course = getCourseByTask(task.courseId);
-      return course.name;
-    } else {
-      return "Own task";
-    }
+      getCourseByTask(task.courseId).then(course => {
+        console.log(course.name);
+        name = course.name;
+      });
+    } 
+    return name;
   }
 
   function getCheckbox() {
@@ -89,10 +93,13 @@ function TaskListItem({ user, task, loadTasks }) {
       </div>
       {!completed && (
         <div className="task-actions">
-          {active && <h3><TaskTimer user={user} task={task} timerOn={active} /></h3>}
+          {active && <h3><TaskTimer user={user} task={task} timerOn={active} loadTasks={loadTasks} /></h3>}
           <button className="toggle-task" onClick={toggleTimer}>
             {buttonText}
           </button>
+          {showTimeUsed && (
+            <span className="time-used">{"Already worked time: " + task.timer }</span>
+          )}
         </div>
       )}
     </div>

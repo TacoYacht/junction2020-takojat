@@ -106,7 +106,7 @@ export async function updateTime(user, task, time) {
 
     let urlEncodedDataPairs = [];
     urlEncodedDataPairs.push( encodeURIComponent( "userId" ) + '=' + encodeURIComponent( user.id ) );
-    urlEncodedDataPairs.push( encodeURIComponent( "taskId" ) + '=' + encodeURIComponent( task.id ) );
+    urlEncodedDataPairs.push( encodeURIComponent( "taskId" ) + '=' + encodeURIComponent( task.taskId ) );
     urlEncodedDataPairs.push( encodeURIComponent( "timeToAdd" ) + '=' + encodeURIComponent( time ) );
     let urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
 
