@@ -76,28 +76,28 @@ export async function addTask(formData) {
     const XHR = new XMLHttpRequest();
 
     let urlEncodedData = "",
-          urlEncodedDataPairs = [],
-          name;
+      urlEncodedDataPairs = [],
+      name;
 
-    for( name in formData ) {
-      urlEncodedDataPairs.push( encodeURIComponent( name ) + '=' + encodeURIComponent( formData[name] ) );
+    for (name in formData) {
+      urlEncodedDataPairs.push(encodeURIComponent(name) + '=' + encodeURIComponent(formData[name]));
     }
 
-    urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
-    XHR.open( 'POST', 'http://localhost:8000/addTask' );
-    XHR.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
+    urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
+    XHR.open('POST', 'http://localhost:8000/addTask');
+    XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     XHR.onload = function () {
       if (this.status >= 200 && this.status < 300) {
-          resolve(XHR.response);
+        resolve(XHR.response);
       } else {
-          reject({
-              status: this.status,
-              statusText: XHR.statusText
-          });
+        reject({
+          status: this.status,
+          statusText: XHR.statusText
+        });
       }
     };
-    XHR.send( urlEncodedData );
-  }); 
+    XHR.send(urlEncodedData);
+  });
 }
 
 export async function updateTime(user, task, time) {
