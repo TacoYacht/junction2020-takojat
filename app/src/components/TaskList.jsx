@@ -44,9 +44,14 @@ function AddNewTask({ user, loadTasks, onCancel }) {
 
 function TaskListItem({ user, task, loadTasks }) {
   const [active, setActive] = useState(false);
+  const [course, setCourse] = useState("Personal task");
   const completed = task.completed === 1;
   const buttonText = active ? "Stop" : "Start";
   const showTimeUsed = !active && task.timer > 0;
+
+  useEffect(() => {
+    if (task.courseId) getCourseForTask();
+  }, [])
 
   async function markTaskComplete() {
     if (completed) {
@@ -62,15 +67,8 @@ function TaskListItem({ user, task, loadTasks }) {
     setActive(!active);
   }
 
-  function getCourseForTask() {
-    let name = "Personal task";
-    if (task.courseId) {
-      getCourseByTask(task.courseId).then(course => {
-        console.log(course.name);
-        name = course.name;
-      });
-    } 
-    return name;
+  async function getCourseForTask() {
+    getCourseByTask(task.courseId).then(course => setCourse(course.name));
   }
 
   function getCheckbox() {
@@ -88,7 +86,7 @@ function TaskListItem({ user, task, loadTasks }) {
       <div className="checkbox" onClick={markTaskComplete}>{getCheckbox()}</div>
       <div className="task-info">
         <span>{task.name}</span>
-        <span>{getCourseForTask()}</span>
+        <span>{course}</span>
         <span>{task.description}</span>
       </div>
       {!completed && (
