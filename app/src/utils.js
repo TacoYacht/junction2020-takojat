@@ -50,14 +50,14 @@ export async function markCompleted(user, task, completed) {
   const XHR = new XMLHttpRequest();
 
   let urlEncodedDataPairs = [];
-  urlEncodedDataPairs.push( encodeURIComponent( "userId" ) + '=' + encodeURIComponent( user.id ) );
-  urlEncodedDataPairs.push( encodeURIComponent( "taskId" ) + '=' + encodeURIComponent( task.taskId ) );
-  urlEncodedDataPairs.push( encodeURIComponent( "completed" ) + '=' + encodeURIComponent( completed ) );
-  let urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
+  urlEncodedDataPairs.push(encodeURIComponent("userId") + '=' + encodeURIComponent(user.id));
+  urlEncodedDataPairs.push(encodeURIComponent("taskId") + '=' + encodeURIComponent(task.taskId));
+  urlEncodedDataPairs.push(encodeURIComponent("completed") + '=' + encodeURIComponent(completed));
+  let urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
 
-  XHR.open( 'POST', 'http://localhost:8000/completeTask' );
-  XHR.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
-  XHR.send( urlEncodedData );
+  XHR.open('POST', 'http://localhost:8000/completeTask');
+  XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  XHR.send(urlEncodedData);
 }
 
 export async function addTask(formData) {
@@ -65,43 +65,43 @@ export async function addTask(formData) {
     const XHR = new XMLHttpRequest();
 
     let urlEncodedData = "",
-          urlEncodedDataPairs = [],
-          name;
+      urlEncodedDataPairs = [],
+      name;
 
     // Turn the data object into an array of URL-encoded key/value pairs.
-    for( name in formData ) {
-      urlEncodedDataPairs.push( encodeURIComponent( name ) + '=' + encodeURIComponent( formData[name] ) );
+    for (name in formData) {
+      urlEncodedDataPairs.push(encodeURIComponent(name) + '=' + encodeURIComponent(formData[name]));
     }
 
     // Combine the pairs into a single string and replace all %-encoded spaces to 
     // the '+' character; matches the behaviour of browser form submissions.
-    urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
-    XHR.open( 'POST', 'http://localhost:8000/addTask' );
-    XHR.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
+    urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
+    XHR.open('POST', 'http://localhost:8000/addTask');
+    XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     XHR.onload = function () {
       if (this.status >= 200 && this.status < 300) {
-          resolve(XHR.response);
+        resolve(XHR.response);
       } else {
-          reject({
-              status: this.status,
-              statusText: XHR.statusText
-          });
+        reject({
+          status: this.status,
+          statusText: XHR.statusText
+        });
       }
     };
-    XHR.send( urlEncodedData );
-  }); 
+    XHR.send(urlEncodedData);
+  });
 }
 
 export async function updateTime(user, task, time) {
   const XHR = new XMLHttpRequest();
 
   let urlEncodedDataPairs = [];
-  urlEncodedDataPairs.push( encodeURIComponent( "userId" ) + '=' + encodeURIComponent( user.id ) );
-  urlEncodedDataPairs.push( encodeURIComponent( "taskId" ) + '=' + encodeURIComponent( task.id ) );
-  urlEncodedDataPairs.push( encodeURIComponent( "timeToAdd" ) + '=' + encodeURIComponent( time ) );
-  let urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
+  urlEncodedDataPairs.push(encodeURIComponent("userId") + '=' + encodeURIComponent(user.id));
+  urlEncodedDataPairs.push(encodeURIComponent("taskId") + '=' + encodeURIComponent(task.id));
+  urlEncodedDataPairs.push(encodeURIComponent("timeToAdd") + '=' + encodeURIComponent(time));
+  let urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
 
-  XHR.open( 'POST', 'http://localhost:8000/updateTime' );
-  XHR.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
-  XHR.send( urlEncodedData );
+  XHR.open('POST', 'http://localhost:8000/updateTime');
+  XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  XHR.send(urlEncodedData);
 }
