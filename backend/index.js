@@ -76,7 +76,7 @@ if ((await userTaskRepo.getAll()).length === 0) {
   await Promise.all(dummyUsersJSON.map(async (user) => {
     const userId = (await userRepo.getByName(user.name)).id
     for (const taskId of user.tasks) {
-      userTaskRepo.create(userId, taskId)
+      taskId === 1 ? userTaskRepo.create(userId, taskId, null, 1) : userTaskRepo.create(userId, taskId)
     }
   }))
 }

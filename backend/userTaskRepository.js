@@ -22,11 +22,11 @@ export class UserTaskRepository {
     return this.dao.run(sql)
   }
 
-  create(userId, taskId, courseId=null) {
+  create(userId, taskId, courseId=null, completed=0) {
     courseId = courseId === undefined ? null : courseId
     return this.dao.run(
-      'INSERT INTO userTasks (userId, taskId, courseId) VALUES (?, ?, ?)',
-      [userId, taskId, courseId])
+      'INSERT INTO userTasks (userId, taskId, courseId, completed) VALUES (?, ?, ?, ?)',
+      [userId, taskId, courseId, completed])
   }
 
   getAllTasksByUserId(userId) {
