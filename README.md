@@ -13,3 +13,21 @@ The course staff will receive REAL data of how much students spent time completi
 ## Disclaimer
 
 Submitted for [Junction Connected 2020](https://connected.hackjunction.com/) -hackathon for the *Sustain Your Mind* -challenge.
+
+## How to use
+
+1. Clone repository
+
+2. Install tools and start running backend
+´´´
+cd backend
+npm install
+npm start
+´´´
+
+3. Install tools and start running frontend
+´´´
+cd App
+npm install
+npm start
+´´´
