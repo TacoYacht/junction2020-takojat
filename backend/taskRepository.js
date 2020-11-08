@@ -11,7 +11,8 @@ export class TaskRepository {
     CREATE TABLE IF NOT EXISTS tasks (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT,
-      description TEXT)`
+      description TEXT
+    )`
     return this.dao.run(sql)
   }
 

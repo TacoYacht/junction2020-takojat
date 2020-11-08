@@ -63,6 +63,7 @@ if ((await practiceRepo.getAll()).length === 0) {
   })
 }
 
+// Fill tasks with dummydata
 if ((await taskRepo.getAll()).length === 0) {
   console.log('Filling tasks table with dummy data')
   for (const task of dummyTasksJSON) {
@@ -119,12 +120,25 @@ app.get('/getUsers', async (req, res) => {
   res.send(users)
 })
 
-app.post('/tasks', (req, res) => {
-  res.send('Will add the tasks later')
+app.post('/addTask', (req, res) => {
+
+  const { userId, name, description, taskId, courseId } = req.body
+  if ((userId === undefined) || (name === undefined)) {
+    res.status(400).send('Missing userId or task name.')
+    return
+  } 
+  else if (taskId === undefined) {
+    const ret_val1 = taskRepo.create(name, description)
+    const taskId = ret_val1.id 
+  } 
+  // Create userTask relation with the given data
+  const ret_val2 = userTaskRepo.create(userId, taskId, courseId)
+
+  res.status(200).send('Task created.')
 })
 
 app.post('/updateTime', async (req, res) => {
-  const { userId, taskId, timeToAdd } = req.query
+  const { userId, taskId, timeToAdd } = req.body
   await userTaskRepo.increaseTimer(userId, taskId, timeToAdd)
   res.status(200).send('Time added to the specified task.')
 })
