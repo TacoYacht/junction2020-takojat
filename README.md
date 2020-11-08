@@ -16,6 +16,12 @@ Submitted for [Junction Connected 2020](https://connected.hackjunction.com/) -ha
 
 ## How to use
 
+You can try the design prototype with limited inteactions: Design prototype: https://www.figma.com/proto/QrT7PKPBi9CcfhjjC1lvcw/Junction-2020?node-id=105%3A2&viewport=591%2C510%2C0.061015449464321136&scaling=min-zoom
+
+OR
+
+Try the concrete implementation by:
+
 1. Clone repository
 
 2. Install tools and start running backend
