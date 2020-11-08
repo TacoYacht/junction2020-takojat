@@ -133,23 +133,24 @@ app.post('/addTask', async (req, res) => {
   // Create userTask relation with the given data
   userTaskRepo.create(userId, taskId, courseId)
 
-  res.status(200).send('Task created.')
+  res.status(204).send('Task created.')
 })
 
 app.post('/updateTime', async (req, res) => {
   const { userId, taskId, timeToAdd } = req.body
   await userTaskRepo.increaseTimer(userId, taskId, timeToAdd)
-  res.status(200).send('Time added to the specified task.')
+  res.status(204).send('Time added to the specified task.')
 })
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`)
 })
 
-app.post('/completeTask', (req, res) => {
+app.post('/completeTask', async (req, res) => {
   const userid = req.body.userId
   const taskid = req.body.taskId
-  userTaskRepo.complete(userid, taskid)
+  const complete = req.body.complete
+  userTaskRepo.changeComplete(userid, taskid, complete)
   res.status(204).send('Task completed')
 })
 

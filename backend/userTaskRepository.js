@@ -52,9 +52,10 @@ export class UserTaskRepository {
     return this.dao.all(`SELECT * FROM userTasks`)
   }
 
-  complete(userid, taskId) {
+  changeComplete(userid, taskid, complete) {
     return this.dao.run(
-      'UPDATE userTasks SET completed = 1 WHERE userId = ? AND taskId = ?'
+      'UPDATE userTasks SET completed = ? WHERE userId = ? AND taskId = ?',
+      [complete, userid, taskid]
     )
   }
 
