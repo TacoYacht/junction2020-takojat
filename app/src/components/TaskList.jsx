@@ -42,7 +42,7 @@ function AddNewTask({ user, onAdd, onCancel }) {
   )
 }
 
-function TaskListItem({ user, task, onClick, loadTasks }) {
+function TaskListItem({ user, task, loadTasks }) {
   const [active, setActive] = useState(false);
   const [completed, setCompleted] = useState(task.completed === 1);
 
@@ -66,7 +66,6 @@ function TaskListItem({ user, task, onClick, loadTasks }) {
   function getCourseForTask() {
     if (task.courseId) {
       let course = getCourseByTask(task.courseId);
-      console.log(course);
       return course.name;
     } else {
       return "Own task";
@@ -86,14 +85,14 @@ function TaskListItem({ user, task, onClick, loadTasks }) {
   return(
     <div className={classNames("task-list-item", { "completed": completed, "active": active })}>
       <div className="checkbox" onClick={markTaskComplete}>{getCheckbox()}</div>
-      <div className="task-info" onClick={onClick}>
+      <div className="task-info">
         <span>{task.name}</span>
         <span>{getCourseForTask()}</span>
         <span>{task.description}</span>
       </div>
       {!completed && (
         <div className="task-actions">
-          <TaskTimer user={user} task={task} timerOn={active} />
+          {active && <h3><TaskTimer user={user} task={task} timerOn={active} /></h3>}
           <button className="toggle-task" onClick={toggleTimer}>
             {buttonText}
           </button>
@@ -103,7 +102,21 @@ function TaskListItem({ user, task, onClick, loadTasks }) {
   );
 }
 
-export function TaskList({ user, setOpenTask }) {
+function Tasks({ user, tasks, loadTasks }) {
+  return (
+    <Fragment>
+      <div className="task-list">
+        {_.map(tasks, (task, i) => {
+          return (
+            <TaskListItem user={user} task={task} loadTasks={loadTasks} key={i} />
+          );
+        })}
+      </div>
+    </Fragment>
+  )
+}
+
+export function TaskList({ user }) {
   const [showAddNew, setShowAddNew] = useState(false);
   const [allTasks, setAllTasks] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
@@ -121,41 +134,13 @@ export function TaskList({ user, setOpenTask }) {
     setUnfinishedTasks(_.filter(allTasks, task => { return task.completed === 0 }));
   }, [allTasks])
 
-  function loadTasks() {
+  async function loadTasks() {
     getTasks(user).then(data => setAllTasks(data))
   }
 
   const completedTasksCount = completedTasks.length;
   const hasFinishedTasks = completedTasksCount > 0;
   const completedMessage = hasFinishedTasks ? "You have already completed " + completedTasksCount + " tasks!" : "";
-
-  function renderTasks() {
-    return (
-      <Fragment>
-        <div className="task-list">
-          {_.map(unfinishedTasks, (task, i) => {
-            return (
-              <TaskListItem user={user} task={task} loadTasks={loadTasks} onClick={() => setOpenTask(task)} key={i} />
-            );
-          })}
-        </div>
-      </Fragment>
-    )
-  }
-
-  function renderFinishedTasks() {
-    return (
-      <Fragment>
-        <div className="task-list">
-          {_.map(completedTasks, (task, i) => {
-            return (
-              <TaskListItem user={user} task={task} loadTasks={loadTasks} onClick={() => {}} key={i} />
-            );
-          })}
-        </div>
-      </Fragment>
-    )
-  }
 
   return(
     <Fragment>
@@ -171,11 +156,11 @@ export function TaskList({ user, setOpenTask }) {
               </button>
               {showAddNew && <AddNewTask user={user} onAdd={loadTasks} onCancel={() => setShowAddNew(false)} />}
             </div>
-            {hasTasks && renderTasks()}
+            {hasTasks && <Tasks tasks={unfinishedTasks} user={user} loadTasks={loadTasks} />}
           </div>
           <div className="right-column">
             <h4>{completedMessage}</h4>
-            {hasFinishedTasks && renderFinishedTasks()}
+            {hasFinishedTasks && <Tasks tasks={completedTasks} user={user} loadTasks={loadTasks} />}
           </div>
         </div>
       </div>

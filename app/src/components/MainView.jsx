@@ -7,12 +7,11 @@ import { Task } from "./Task";
 import { TaskList } from "./TaskList";
 
 export function MainView({ user }) {
-  const [openTask, setOpenTask] = useState(null);
   const [view, setView] = useState("tasks");
 
-  const showTaskList = view === "tasks" && !openTask;
-  const showTimer = view === "timer" && !openTask;
-  const showPractices = view === "break" && !openTask;
+  const showTaskList = view === "tasks";
+  const showTimer = view === "timer";
+  const showPractices = view === "break";
 
   useEffect(() => {
     if (!("Notification" in window)) {
@@ -22,11 +21,6 @@ export function MainView({ user }) {
     }
   }, [])
 
-  function openTaskView() {
-    setView("tasks");
-    setOpenTask(null);
-  }
-
   return (
     <Fragment>
       <div className="header">
@@ -34,13 +28,12 @@ export function MainView({ user }) {
           <img alt="aalto logo" src={AaltoLogo} />
         </div>
         <div className="navigation">
-          <span onClick={openTaskView}>{"Tasks"}</span>
+          <span onClick={() => setView("tasks")}>{"Tasks"}</span>
           <span onClick={() => setView("timer")}>{"Timer"}</span>
           <span onClick={() => setView("break")}>{"Take a break"}</span>
         </div>
       </div>
-      {showTaskList && <TaskList user={user} setOpenTask={setOpenTask} />}
-      {openTask && <Task task={openTask} user={user} />}
+      {showTaskList && <TaskList user={user} />}
       {showTimer && <Task task={null} user={user} />}
       {showPractices && <TakeABreak />}
     </Fragment>
