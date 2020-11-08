@@ -1,17 +1,14 @@
-# TaskAchiever
+# A" Essentials
 
-> Join the quest for greatness with other TaskAchievers, and free your mind for the essentials in your life.
+> Start working smarter, more self-coordinated way and be well. Save your mind for the essentials in your life.
 
 ## Project Description
 
-How great would it be if there were easy tools to organise your course schedule and easily track the time spent?
-What if you could see whenever fellow students are working on the same problems as you and allow you to communicate with them based on the common tasks?
+How great would it be if there existed an easy tool to organise your course schedule and easily track the time spent? What if you could see whenever fellow students are working on the same problems as you and allow you to communicate with them based on the common tasks? Are you already familiar with the bliss of working in POMODORO manner? 
 
-With TaskAchiever you can track your courses and tasks in an intuitive way. The professors can schedule and plan out the courses. 
-Students enrolled on the courses can track time spent on each individual task, whether it's reading a chapter from the course book or finishing exercises.
+With A" Essentials you can track your tasks, both personal and course related, in an intuitive way. Students enrolled on the courses can track time spent on each individual task, whether it's reading a chapter from the course book or finishing exercises.
 
-The teaching staff will receive notifications if some of the tasks they have scheduled are taking longer for students to complete.
-Based on this time tracking feedback the staff can  react and assist with the specific task.
+The course staff will receive REAL data of how much students spent time completing course exercises. There is also possibility to send notifications if some of the tasks they have scheduled are taking longer for students to complete. This could be used to encourage people to seek help from course staff or other students in time before they tire out.
 
 ## Disclaimer
 
