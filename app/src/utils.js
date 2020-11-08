@@ -83,7 +83,7 @@ export async function addTask(formData) {
     alert( 'Oops! Something went wrong.' );
   } );
 
-  XHR.open( 'POST', 'http://localhost:8000/tasks' );
+  XHR.open( 'POST', 'http://localhost:8000/addTask' );
   XHR.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
   XHR.send( urlEncodedData );
 }

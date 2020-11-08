@@ -99,13 +99,16 @@ article {
 
 .container {
   position: absolute;
-  top: 40%;
   left: 50%;
-  transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
 }
 
-.task-view .container {
-  width: 80%;
+button:focus {
+  outline: none;
+}
+
+button:hover {
+  cursor: pointer;
 }

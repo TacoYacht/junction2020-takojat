@@ -5,9 +5,11 @@ import Timecode from "react-timecode";
 
 import Checked from "../assets/Checked.svg";
 import Unchecked from "../assets/Unchecked.svg";
+import Plus from "../assets/plus.svg";
+import MockCourseSelect from "../assets/MockCourseSelect.svg";
 import { markCompleted, addTask, getCourseByTask } from "../utils.js";
 
-function AddNewTask({ user }) {
+function AddNewTask({ user, onCancel }) {
   const [formData, setFormData] = useState({ name: "", description: "", userId: user.id });
 
   function handleInput(e) {
@@ -17,22 +19,20 @@ function AddNewTask({ user }) {
   function handleAddNewTask(e) {
     e.preventDefault();
     addTask(formData);
+    onCancel()
   }
 
   return (
     <div className="new-task-information">
+      <div className="checkbox"><img src={Unchecked} alt="unchecked" /></div>
       <form onSubmit={handleAddNewTask}>
-        <p>
-          <label htmlFor="name">{"Task name"}</label>
-          <input type="text" name="name" onChange={handleInput} />
-        </p>
-        <p>
-          <label htmlFor="description">{"Task description"}</label>
-          <input type="text" name="description" onChange={handleInput} />
-        </p>
-        <p>
-          <button type="submit">{"Add"}</button>
-        </p>
+        <div className="new-task-fields">
+          <input type="text" name="name" placeholder="Add name" onChange={handleInput} />
+          <img src={MockCourseSelect} alt="Add to course" />
+          <input type="text" name="description" placeholder="Add description" onChange={handleInput} />
+        </div>
+        <button className="cancel" onClick={onCancel}>{"Cancel"}</button>
+        <button type="submit">{"Add"}</button>
       </form>
     </div>
   )
@@ -82,19 +82,25 @@ function TaskListItem({ task, onClick }) {
 export function TaskList({ user, tasks, setOpenTask }) {
   const [showAddNew, setShowAddNew] = useState(false);
   const hasTasks = tasks.length > 0;
+  const message = hasTasks ? "Here are your most important tasks for today" : "Congratulations! You've done it all.";
 
-  function renderNoTasks() {
-    return (
-      <h2>{"Congratulations! You've done it all."}</h2>
-    );
+  function getCompletedTasks() {
+    return _.filter(tasks, task => task.completed === 1 )
   }
+
+  function getUnfinishedTasks() {
+    return _.filter(tasks, task => task.completed === 0 )
+  }
+
+  const completedTasksCount = getCompletedTasks().length;
+  const hasFinishedTasks = completedTasksCount > 0;
+
 
   function renderTasks() {
     return (
       <Fragment>
-        <h2>{"Here are your most important tasks for today"}</h2>
         <div className="task-list">
-          {_.map(tasks, (task, i) => {
+          {_.map(getUnfinishedTasks(), (task, i) => {
             return (
               <TaskListItem task={task} onClick={() => setOpenTask(task)} key={i} />
             );
@@ -104,17 +110,42 @@ export function TaskList({ user, tasks, setOpenTask }) {
     )
   }
 
+  function renderFinishedTasks() {
+    return (
+      <Fragment>
+        <div className="task-list">
+          {_.map(getCompletedTasks(), (task, i) => {
+            return (
+              <TaskListItem task={task} onClick={() => {}} key={i} />
+            );
+          })}
+        </div>
+      </Fragment>
+    )
+  }
+
+
   return(
     <Fragment>
       <div className="welcome-view">
         <div className="container">
-          <h3>{"Hello, " + user.name + "!"}</h3>
-          {hasTasks ? renderTasks() : renderNoTasks()}
+          <div className="left-column">
+            <h3>{"Hello, " + user.name + "!"}</h3>
+            <h2>{message}</h2>
+            <div className="add-task">
+              <button className="add-button" onClick={() => setShowAddNew(!showAddNew)}>
+                <img src={Plus} />
+                <span>{"Create new task"}</span>
+              </button>
+              {showAddNew && <AddNewTask user={user} onCancel={() => setShowAddNew(false)} />}
+            </div>
+            {hasTasks && renderTasks()}
+          </div>
+          <div className="right-column">
+            <h4>{"You have already completed " + completedTasksCount + " task!"}</h4>
+            {hasFinishedTasks && renderFinishedTasks()}
+          </div>
         </div>
-      </div>
-      <div className="add-task">
-        <button onClick={() => setShowAddNew(!showAddNew)}>{"Add new"}</button>
-        {showAddNew && <AddNewTask user={user} />}
       </div>
     </Fragment>
   );
