@@ -7,10 +7,12 @@ function Practice({ practice }) {
   function goToPractice() {
     //todo
   }
+  
+  const image = require("../assets/" + practice.imgpath);
 
   return (
     <div className="practice-card">
-      <img src={practice.imgpath} alt={practice.name} />
+      <img src={image} alt={practice.name} />
       <h4>{practice.title}</h4>
       <span>{practice.description}</span>
       <span className="caption">{practice.duration + " min"}</span>

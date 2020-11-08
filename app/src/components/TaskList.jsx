@@ -7,6 +7,7 @@ import Checked from "../assets/Checked.svg";
 import Unchecked from "../assets/Unchecked.svg";
 import Plus from "../assets/plus.svg";
 import MockCourseSelect from "../assets/MockCourseSelect.svg";
+
 import { markCompleted, addTask, getCourseByTask } from "../utils.js";
 
 function AddNewTask({ user, onCancel }) {
@@ -39,7 +40,7 @@ function AddNewTask({ user, onCancel }) {
 }
 
 function TaskListItem({ task, onClick }) {
-  const [completed, setCompleted] = useState(task.completed === "true");
+  const [completed, setCompleted] = useState(task.completed === 1);
 
   function markTaskComplete() {
     if (completed) {
@@ -85,16 +86,16 @@ export function TaskList({ user, tasks, setOpenTask }) {
   const message = hasTasks ? "Here are your most important tasks for today" : "Congratulations! You've done it all.";
 
   function getCompletedTasks() {
-    return _.filter(tasks, task => task.completed === 1 )
+    return _.filter(tasks, task => { return task.completed === 1 });
   }
 
   function getUnfinishedTasks() {
-    return _.filter(tasks, task => task.completed === 0 )
+    return _.filter(tasks, task => { return task.completed === 0 });
   }
 
   const completedTasksCount = getCompletedTasks().length;
   const hasFinishedTasks = completedTasksCount > 0;
-
+  const completedMessage = hasFinishedTasks ? "You have already completed " + completedTasksCount + " tasks!" : "";
 
   function renderTasks() {
     return (
@@ -124,7 +125,6 @@ export function TaskList({ user, tasks, setOpenTask }) {
     )
   }
 
-
   return(
     <Fragment>
       <div className="welcome-view">
@@ -142,7 +142,7 @@ export function TaskList({ user, tasks, setOpenTask }) {
             {hasTasks && renderTasks()}
           </div>
           <div className="right-column">
-            <h4>{"You have already completed " + completedTasksCount + " task!"}</h4>
+            <h4>{completedMessage}</h4>
             {hasFinishedTasks && renderFinishedTasks()}
           </div>
         </div>

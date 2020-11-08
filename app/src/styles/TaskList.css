@@ -67,8 +67,12 @@
   line-height: 150%;
 }
 
+.task-list {
+  margin-bottom: 20px;
+}
+
 .task-list-item.completed {
-  background: #E8F6F3;
+  background: #EEFBF5;
 }
 
 .task-list-item.selected {
